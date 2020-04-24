@@ -11,27 +11,33 @@ import Foundation
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var amountLabel: UILabel!
-    var intAmount: Int = 0
+    @IBOutlet private  weak var amountLabel: UILabel!
+    private var amount: Int = 0
     
-    @IBAction private func actionChangeAmountButton(_ sender: UIStepper) {
-        //UIStepperの値をDoubleからIntに変換し、intAmountに代入
-        intAmount = Int(sender.value)
-        
+    //Int型の値を受け取り、3桁毎にカンマで区切る「addComma」メソッド
+    private func addComma(_ forValue: Int) -> String? {
         //3桁毎にカンマで区切る設定
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = ","
         formatter.groupingSize = 3
         
-        //intAmountをNSNumber型に変換
-        let nsAmount = NSNumber(value: intAmount)
+        //amountをNSNumber型に変換
+        let nsAmount = NSNumber(value: amount)
         //変換したnsAmountに3桁区切りの設定を適用
         let addCommaAmount = formatter.string(from: nsAmount)
         
-        //カンマで区切ったStepperの値をamountLabel.textに代入して表示
-        amountLabel.text = addCommaAmount
+        //戻り値としてカンマで区切られたaddCountAmountを返す
+        return addCommaAmount
+    }
+    
+    @IBAction private func actionChangeAmountButton(_ sender: UIStepper) {
+        //UIStepperからの値を変数amountに代入
+        amount = Int(sender.value)
         
+        //addCommaメソッドを使いカンマ区切りの設定をし、amountLabelのtextに代入して表示
+        amountLabel.text = addComma(amount)
+
     }
     
     override func viewDidLoad() {
