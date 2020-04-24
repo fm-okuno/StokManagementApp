@@ -59,7 +59,7 @@ class ViewController: UIViewController {
     
     //取得したデータをHH:mm:ssの形に整形してString型でtimeLabelのtextプロパティに代入する
     //showNowTimeメソッド
-    @objc func showNowTime() {
+    @objc private func showNowTime() {
         let date = Date()
         let dateFormatter = DateFormatter()
         
@@ -68,6 +68,5 @@ class ViewController: UIViewController {
         timerData = dateFormatter.string(from: date)
         timeLabel.text = timerData
     }
-    
 }
 
