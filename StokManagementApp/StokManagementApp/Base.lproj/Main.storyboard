@@ -49,7 +49,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="追加"/>
                                 <connections>
-                                    <action selector="actionAddAmountButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Ug-VW-L9b"/>
+                                    <action selector="actionAddAmountButton:" destination="BYZ-38-t0r" eventType="valueChanged" id="H7U-Xl-qTV"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ySA-Dc-z9q">

@@ -9,12 +9,16 @@
 import UIKit
 import Foundation
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController {
     
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var amountLabel: UILabel!
     @IBOutlet private weak var commentText: UITextField!
     private var amount: Int = 0
+//    private var amountArray: [String] = [""]
+    private var arrayCounter: Int = 0
+    //テスト用のtestStrArray配列
+    private var testStrArray: [String] = ["this", "is", "test", "array",]
     
     //Int型の値を受け取り、3桁毎にカンマで区切る「addComma」メソッド
     private func addComma(_ forValue: Int) -> String? {
@@ -33,44 +37,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return addCommaAmount
     }
     
+    //数量を入力する為のactionChangeAmountButton
     @IBAction private func actionChangeAmountButton(_ sender: UIStepper) {
         //UIStepperからの値を変数amountに代入
         amount = Int(sender.value)
         
         //addCommaメソッドを使いカンマ区切りの設定をし、amountLabelのtextに代入して表示
         amountLabel.text = addComma(amount)
-        
-    }
-
-    //追加ボタン
-    @IBAction private func actionAddAmountButton(_ sender: UIButton) {
-        //String型のamountDataにamountLabelの値を代入
-        var amountData: String! = amountLabel.text
-        //amountDataの値が"数量9,999"（未入力）の場合には、0を代入
-        if amountData == "数量9,999" {
-            amountData = "0"
-        //値が入っている場合には、そのまま変数amountDataに代入
-        } else {
-            amountData = amountLabel.text
-        }
-        //timeDataにHH:mm:ssに整形済みの現在時刻を代入
-        let timeData: String! = timeLabel.text
-        //commentDataにテキスト入力欄の文字列を代入
-        let commentData: String! = commentText.text
-    }
-    
-    //セルを作成（現在は仮の値として10を設定）
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    //amountCellにセルを生成して返却
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "amountCell")
-        
-        cell.textLabel?.text = "仮の値です。"
-        return cell
     }
     
     //Timerをインスタンス化
@@ -101,3 +74,49 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         timeLabel.text = timerData
     }
 }
+
+//extensinを用いてセルの生成部分を分割
+extension ViewController : UITableViewDataSource, UITableViewDelegate {
+    //追加ボタン
+    @IBAction private func actionAddAmountButton(_ sender: UIButton) {
+//        //String型のamountDataにamountLabelの値を代入
+//        var amountData: String! = amountLabel.text!
+//        print(amountData!)
+//        //amountDataの値が"数量9,999"（未入力）の場合には、0を代入
+//        if amountData == "数量9,999" {
+//            amountData = "0"
+//        //値が入っている場合には、そのまま変数amountDataに代入
+//        } else {
+//            amountData = amountLabel!.text
+//            print(amountData!)
+//        }
+//        //timeDataにHH:mm:ssに整形済みの現在時刻を代入
+//        let timeData: String! = timeLabel.text
+//        //commentDataにテキスト入力欄の文字列を代入
+//        let commentData: String! = commentText.text
+//
+////        amountArray.append(testStrArray)
+
+    }
+    
+    //セルを生成
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        arrayCounter = testStrArray.count
+        
+        //配列の要素の数だけセルを生成
+        return arrayCounter
+
+    }
+    
+    //セルのデータ
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "amountCell")
+        
+        //配列の要素をセルに入れて表示
+        cell.textLabel?.text = testStrArray[indexPath.row]
+        
+        return cell
+    }
+}
+
