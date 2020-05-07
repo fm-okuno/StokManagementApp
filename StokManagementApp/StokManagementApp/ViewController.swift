@@ -14,11 +14,35 @@ class ViewController: UIViewController {
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var amountLabel: UILabel!
     @IBOutlet private weak var commentText: UITextField!
+    @IBOutlet private weak var myUITable: UITableView!
     private var amount: Int = 0
-//    private var amountArray: [String] = [""]
+    private var amountArray: [String] = []
     private var arrayCounter: Int = 0
+    
     //テスト用のtestStrArray配列
-    private var testStrArray: [String] = ["this", "is", "test", "array",]
+    //    private var testStrArray: [String] = ["this", "is", "test", "array",]
+    
+    //追加ボタン
+    @IBAction private func actionAddAmountButton(_ sender: UIButton) {
+        //String型のamountDataにamountLabelの値を代入
+        var amountData: String! = amountLabel.text!
+        //amountDataの値が"数量9,999"（未入力）の場合には、0を代入
+        if amountData == "数量9,999" {
+            amountData = "0"
+            //値が入っている場合には、そのまま変数amountDataに代入
+        } else {
+            amountData = amountLabel!.text
+        }
+        //timeDataにHH:mm:ssに整形済みの現在時刻を代入
+        let timeData: String! = timeLabel.text
+        //commentDataにテキスト入力欄の文字列を代入
+        let commentData: String! = commentText.text
+        
+        amountArray += [("数量：\(amountData!)　時刻：\(timeData!)　コメント：\(commentData!)")]
+        
+        myUITable.reloadData()
+        
+    }
     
     //Int型の値を受け取り、3桁毎にカンマで区切る「addComma」メソッド
     private func addComma(_ forValue: Int) -> String? {
@@ -53,6 +77,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.myUITable.delegate = self
+        self.myUITable.dataSource = self
+        
         //1秒毎にshowNowTimeメソッドを実行する
         timer = Timer.scheduledTimer(timeInterval: 1,
                                      target: self,
@@ -77,46 +105,52 @@ class ViewController: UIViewController {
 
 //extensinを用いてセルの生成部分を分割
 extension ViewController : UITableViewDataSource, UITableViewDelegate {
-    //追加ボタン
-    @IBAction private func actionAddAmountButton(_ sender: UIButton) {
-//        //String型のamountDataにamountLabelの値を代入
-//        var amountData: String! = amountLabel.text!
-//        print(amountData!)
-//        //amountDataの値が"数量9,999"（未入力）の場合には、0を代入
-//        if amountData == "数量9,999" {
-//            amountData = "0"
-//        //値が入っている場合には、そのまま変数amountDataに代入
-//        } else {
-//            amountData = amountLabel!.text
-//            print(amountData!)
-//        }
-//        //timeDataにHH:mm:ssに整形済みの現在時刻を代入
-//        let timeData: String! = timeLabel.text
-//        //commentDataにテキスト入力欄の文字列を代入
-//        let commentData: String! = commentText.text
-//
-////        amountArray.append(testStrArray)
-
-    }
     
     //セルを生成
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        arrayCounter = testStrArray.count
         
         //配列の要素の数だけセルを生成
-        return arrayCounter
-
+        return amountArray.count
     }
     
     //セルのデータ
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: UITableViewCell
         
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "amountCell")
+        //indexPathが2で割れる時（偶数である場合）には、背景色を赤色にする。
+        if indexPath.row % 2 == 0 {
+            cell = UITableViewCell(style: .default, reuseIdentifier: "amountCell1")
+            cell.backgroundColor = .systemRed
+            
+        } else {
+//          2で割れない場合（奇数である場合）には、背景色を青色にする。
+            cell = UITableViewCell(style: .default, reuseIdentifier: "amountCell2")
+            cell.backgroundColor = .systemBlue
+        }
         
-        //配列の要素をセルに入れて表示
-        cell.textLabel?.text = testStrArray[indexPath.row]
-        
+        cell.textLabel?.text = amountArray[indexPath.row]
         return cell
     }
+    
+    //セルは複数選択可能。選択時には背景色を黄色にし、チェックマークを付与。
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.accessoryType = .checkmark
+        cell?.selectionStyle = .none
+        cell?.backgroundColor = .yellow
+        tableView.allowsMultipleSelection = true
+    }
+    
+    //セル選択解除時にはセルの背景色を元の色に戻し、チェックマークを削除。
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.accessoryType = .none
+        
+        //セル生成時と同じ条件で再度色を設定（元の色に戻す）
+        if indexPath.row % 2 == 0 {
+            cell!.backgroundColor = .systemRed
+        } else {
+            cell!.backgroundColor = .systemBlue
+        }
+    }
 }
-
