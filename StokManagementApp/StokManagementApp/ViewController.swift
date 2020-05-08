@@ -11,12 +11,6 @@ import Foundation
 
 class ViewController: UIViewController {
     
-        // MARK: - const クラスで使用する定数や構造体、列挙型
-    //    enum Sample {
-    //        case apple
-    //        case orange
-    //    }
-    
     //MARK: - IBOutlet
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var amountLabel: UILabel!
@@ -189,8 +183,4 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
             cell.backgroundColor = .systemBlue
         }
     }
-    
-    // もしかしたらセルに代入する必要があるかもしれない
-        // tableView.cellForRow(at: indexPath) = cell
-    
 }
