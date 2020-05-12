@@ -22,13 +22,14 @@ class ViewController: UIViewController {
     private var amountArray: [String] = []
     private var arrayCounter: Int = 0
     //Timerをインスタンス化
-    var timer = Timer()
+    private var timer = Timer()
     //時刻のデータを入れる為のtimerData
-    var timerData: String = ""
-    
-    //テスト用のtestStrArray配列
-    //    private var testStrArray: [String] = ["this", "is", "test", "array",]
-    
+    private var timerData: String = ""
+    //入力された在庫数を入れる為のinputAmountArray
+    private var inputAmountArray: [Int] = []
+    //選択されたセルの合計値を保存する為のadditionAmountValue
+    private var additionAmountValue: Int = 0
+
     //MARK: - public method
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +50,9 @@ class ViewController: UIViewController {
     //クリアボタン押下で配列を空にして画面を更新する事でリストを全件削除
     @IBAction private func actionAmountClearButton(_ sender: UIButton) {
         amountArray = []
+        inputAmountArray = []
+        //在庫の合計値も初期化
+        additionAmountValue = 0
         myUITable.reloadData()
     }
     
@@ -63,6 +67,8 @@ class ViewController: UIViewController {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             amountArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+            //削除された行の在庫データを削除
+            inputAmountArray.remove(at: indexPath.row)
         }
     }
 
@@ -83,9 +89,13 @@ class ViewController: UIViewController {
         let commentData: String! = commentText.text
         
         amountArray += [("数量：\(amountData!)　時刻：\(timeData!)　コメント：\(commentData!)")]
+        //カンマのついていない在庫数をinputAmountArrayに追加
+        inputAmountArray.append(amount)
+        
+        //追加ボタン押下で選択が全解除される為、一度additionAmountValueを初期化
+        additionAmountValue = 0
         
         myUITable.reloadData()
-        
     }
     
     //数量を入力する為のactionChangeAmountButton
@@ -95,6 +105,25 @@ class ViewController: UIViewController {
         
         //addCommaメソッドを使いカンマ区切りの設定をし、amountLabelのtextに代入して表示
         amountLabel.text = addComma(amount)
+    }
+    
+    //選択されたセルの合計数量を表示する
+    @IBAction private func actionShowSelectedTotalValueButton(_ sender: UIButton) {
+        
+        let alert: UIAlertController = UIAlertController(title: "計算結果", message: "合計\(additionAmountValue)です",
+            preferredStyle: UIAlertController.Style.alert)
+        
+        let confirmAction: UIAlertAction = UIAlertAction(title: "OK",
+                                                         style: UIAlertAction.Style.default,
+                                                         handler:{
+            // 確定ボタンが押された時の処理
+            (action: UIAlertAction!) -> Void in
+        })
+        
+        alert.addAction(confirmAction)
+
+        //実際にAlertを表示する
+        present(alert, animated: true, completion: nil)
     }
     
     //MARK: - private method
@@ -152,9 +181,12 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
             //2で割れない場合（奇数である場合）には、背景色を青色にする。
             cell = UITableViewCell(style: .default, reuseIdentifier: "amountCell2")
             cell.backgroundColor = .systemBlue
+
         }
         
         cell.textLabel?.text = amountArray[indexPath.row]
+        //セルに行数のtagをつける
+        cell.tag = indexPath.row
         return cell
     }
     
@@ -165,15 +197,22 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
         cell?.selectionStyle = .none
         cell?.backgroundColor = .yellow
         tableView.allowsMultipleSelection = true
+        
+        //押下されたセルのtagをindexに指定し、additionAmountValueに在庫をプラス
+        additionAmountValue += inputAmountArray[cell!.tag]
     }
     
-    //セル選択解除時にはセルの背景色を元の色に戻し、チェックマークを削除。
+    //セル選択解除時
+    //セルの背景色を元の色に戻し、チェックマークを削除。
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         //cellがnullなら後続処理を継続しない
         guard let cell = tableView.cellForRow(at: indexPath) else {
             return
         }
         
+        //選択解除されたセルの在庫分をマイナス
+        additionAmountValue -= inputAmountArray[cell.tag]
+
         cell.accessoryType = .none
         
         //セル生成時と同じ条件で再度色を設定（元の色に戻す）
