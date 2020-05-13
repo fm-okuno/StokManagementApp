@@ -75,20 +75,35 @@ class ViewController: UIViewController {
     //追加ボタン
     @IBAction private func actionAddAmountButton(_ sender: UIButton) {
         //String型のamountDataにamountLabelの値を代入
-        var amountData: String! = amountLabel.text!
+        var amountData: String? = amountLabel.text
+        
         //amountDataの値が"数量9,999"（未入力）の場合には、0を代入
         if amountData == "数量9,999" {
             amountData = "0"
             //値が入っている場合には、そのまま変数amountDataに代入
-        } else {
-            amountData = amountLabel!.text
         }
-        //timeDataにHH:mm:ssに整形済みの現在時刻を代入
-        let timeData: String! = timeLabel.text
-        //commentDataにテキスト入力欄の文字列を代入
-        let commentData: String! = commentText.text
         
-        amountArray += [("数量：\(amountData!)　時刻：\(timeData!)　コメント：\(commentData!)")]
+        //amountDataがnilの場合には後続処理を継続しない
+        guard let thisAmountData = amountData else {
+            return
+        }
+        
+        //timeDataにHH:mm:ssに整形済みの現在時刻を代入
+        let timeData: String? = timeLabel.text
+        //timeDataがnilの場合には後続処理を継続しない
+        guard let thisTimeData = timeData else {
+            return
+        }
+        
+        //commentDataにテキスト入力欄の文字列を代入
+        let commentData: String? = commentText.text
+        //commentDataがnilの場合には後続処理を継続しない
+        guard let thisCommentData = commentData else {
+            return
+        }
+        
+        amountArray += [("数量：\(thisAmountData)　時刻：\(thisTimeData)　コメント：\(thisCommentData)")]
+        
         //カンマのついていない在庫数をinputAmountArrayに追加
         inputAmountArray.append(amount)
         
@@ -117,7 +132,7 @@ class ViewController: UIViewController {
                                                          style: UIAlertAction.Style.default,
                                                          handler:{
             // 確定ボタンが押された時の処理
-            (action: UIAlertAction!) -> Void in
+            (action: UIAlertAction) -> Void in
         })
         
         alert.addAction(confirmAction)
@@ -199,7 +214,10 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
         tableView.allowsMultipleSelection = true
         
         //押下されたセルのtagをindexに指定し、additionAmountValueに在庫をプラス
-        additionAmountValue += inputAmountArray[cell!.tag]
+        guard let thisCellTag = cell?.tag else {
+            return
+        }
+        additionAmountValue += inputAmountArray[thisCellTag]
     }
     
     //セル選択解除時
