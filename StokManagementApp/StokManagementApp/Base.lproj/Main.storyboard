@@ -86,6 +86,9 @@
                                 <rect key="frame" x="156" y="829" width="238" height="44"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="選択された合計数量"/>
+                                <connections>
+                                    <action selector="actionShowSelectedTotalValueButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eOk-AN-es1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bc-IU-hDr">
                                 <rect key="frame" x="20" y="829" width="80" height="44"/>
