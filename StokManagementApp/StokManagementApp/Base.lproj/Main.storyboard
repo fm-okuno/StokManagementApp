@@ -153,20 +153,12 @@
                                     <navigationItem title="Title" id="brN-2R-Dxj"/>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g04-wL-DX9">
-                                <rect key="frame" x="20" y="411" width="374" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Pa8-hY-pnp"/>
                     </view>
                     <navigationItem key="navigationItem" id="F4A-Gz-6me"/>
                     <connections>
-                        <outlet property="detailLabel" destination="g04-wL-DX9" id="znR-BB-KqB"/>
                         <outlet property="detailTitle" destination="brN-2R-Dxj" id="epZ-Ta-crY"/>
                     </connections>
                 </viewController>

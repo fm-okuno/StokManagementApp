@@ -29,6 +29,8 @@ class ViewController: UIViewController {
     private var inputAmountArray: [Int] = []
     //選択されたセルの合計値を保存する為のadditionAmountValue
     private var additionAmountValue: Int = 0
+    //セグエで受け渡す変数
+    private var sendText: String?
 
     //MARK: - public method
     override func viewDidLoad() {
@@ -44,6 +46,16 @@ class ViewController: UIViewController {
                                      userInfo: nil,
                                      repeats: true
         )
+    }
+    
+    //segueで遷移時の処理
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "toDetailView") {
+            let detailVC: DetailViewController = (segue.destination as? DetailViewController)!
+            
+            //detailVCのtitleTextにamountArrayを入れた変数を指定
+            detailVC.titleText = sendText
+        }
     }
     
     //MARK: - IBAction
@@ -128,9 +140,6 @@ class ViewController: UIViewController {
 
         //実際にAlertを表示する
         present(alert, animated: true, completion: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     }
     
     //MARK: - private method
@@ -242,15 +251,9 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
         let shareAction = UIContextualAction(style: .normal  , title: "詳細") {
             (ctxAction, view, completionHandler) in
             
+            //sendTextに詳細ボタンが押された行に表示されているamountArrayの値を代入
+            self.sendText = self.amountArray[indexPath.row]            
             self.performSegue(withIdentifier: "toDetailView", sender: nil)
-            func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-                
-                if segue.identifier == "toDetailView" {
-                    let nextView = (segue.destination as! DetailViewController)
-                    nextView.argString = "前画面から取得"
-
-                }
-            }
             
             completionHandler(true)
         }
