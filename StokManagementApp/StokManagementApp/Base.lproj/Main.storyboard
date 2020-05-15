@@ -153,6 +153,19 @@
                                     <navigationItem title="Title" id="brN-2R-Dxj"/>
                                 </items>
                             </navigationBar>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gyk-hB-apc">
+                                <rect key="frame" x="0.0" y="44" width="414" height="764"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qsa-HN-Iwo">
+                                <rect key="frame" x="0.0" y="798" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Item" id="VfH-MN-3er"/>
+                                    <barButtonItem title="Item" id="beg-sB-vLZ"/>
+                                    <barButtonItem title="Item" id="2IE-NN-ie6"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Pa8-hY-pnp"/>

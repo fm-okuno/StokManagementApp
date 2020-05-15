@@ -50,7 +50,7 @@ class ViewController: UIViewController {
     
     //segueで遷移時の処理
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "toDetailView") {
+        if segue.identifier == "toDetailView" {
             let detailVC: DetailViewController = (segue.destination as? DetailViewController)!
             
             //detailVCのtitleTextにamountArrayを入れた変数を指定

@@ -11,7 +11,7 @@ import UIKit
 
 class DetailViewController : UIViewController {
     
-    //TitleにViewControllerから受け取ったamountArrayのテキストを表示
+    //titleTextにViewControllerから受け取ったamountArrayのテキストを表示
     var titleText: String?
     
     @IBOutlet private weak var detailTitle: UINavigationItem!
@@ -20,12 +20,12 @@ class DetailViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //argStringに値が入っていない場合には、「値がないよ」と表示
-        if titleText == nil {
-            titleText = "値がないよ"
+        //argStringに値が入っていない場合には、後続処理を継続しない
+        guard let thisTitleText = titleText else {
+            return
         }
         
         //titleにtextの内容を代入して表示
-        detailTitle.title = titleText
+        detailTitle.title = thisTitleText
     }
 }
