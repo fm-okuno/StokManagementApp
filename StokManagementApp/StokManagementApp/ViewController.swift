@@ -29,6 +29,8 @@ class ViewController: UIViewController {
     private var inputAmountArray: [Int] = []
     //選択されたセルの合計値を保存する為のadditionAmountValue
     private var additionAmountValue: Int = 0
+    //セグエで受け渡す変数
+    private var sendText: String?
 
     //MARK: - public method
     override func viewDidLoad() {
@@ -46,6 +48,16 @@ class ViewController: UIViewController {
         )
     }
     
+    //segueで遷移時の処理
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetailView" {
+            let detailVC: DetailViewController = (segue.destination as? DetailViewController)!
+            
+            //detailVCのtitleTextにamountArrayを入れた変数を指定
+            detailVC.titleText = sendText
+        }
+    }
+    
     //MARK: - IBAction
     //クリアボタン押下で配列を空にして画面を更新する事でリストを全件削除
     @IBAction private func actionAmountClearButton(_ sender: UIButton) {
@@ -61,17 +73,6 @@ class ViewController: UIViewController {
         return true
     }
     
-    //セルを左にスワイプし、削除ボタンを表示。削除ボタン押下でセルを削除。
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
-                   forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCell.EditingStyle.delete {
-            amountArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
-            //削除された行の在庫データを削除
-            inputAmountArray.remove(at: indexPath.row)
-        }
-    }
-
     //追加ボタン
     @IBAction private func actionAddAmountButton(_ sender: UIButton) {
         //String型のamountDataにamountLabelの値を代入
@@ -142,7 +143,7 @@ class ViewController: UIViewController {
     }
     
     //MARK: - private method
-    
+        
     //Int型の値を受け取り、3桁毎にカンマで区切る「addComma」メソッド
     private func addComma(_ forValue: Int) -> String? {
         //3桁毎にカンマで区切る設定
@@ -176,6 +177,7 @@ class ViewController: UIViewController {
 //MARK: - extension
 //extensinを用いてセルの生成部分を分割
 extension ViewController : UITableViewDataSource, UITableViewDelegate {
+    
     //セルを生成
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -239,5 +241,43 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
         } else {
             cell.backgroundColor = .systemBlue
         }
+    }
+    
+    //セルがスワイプされた際の動作
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        // 詳細ボタンのアクションを設定
+        //詳細ボタンを押下で詳細詳細画面へ遷移
+        let shareAction = UIContextualAction(style: .normal  , title: "詳細") {
+            (ctxAction, view, completionHandler) in
+            
+            //sendTextに詳細ボタンが押された行に表示されているamountArrayの値を代入
+            self.sendText = self.amountArray[indexPath.row]            
+            self.performSegue(withIdentifier: "toDetailView", sender: nil)
+            
+            completionHandler(true)
+        }
+
+        // 削除のアクションを設定する
+        let deleteAction = UIContextualAction(style: .destructive, title:"削除") {
+            (ctxAction, view, completionHandler) in
+            
+            //削除ボタンが押された行のデータを配列から削除
+            self.amountArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            //合計値をクリアして画面を再読み込み
+            self.additionAmountValue = 0
+            self.myUITable.reloadData()
+            
+            completionHandler(true)
+        }
+
+        // スワイプでの削除を無効化して設定する
+        let swipeAction = UISwipeActionsConfiguration(actions:[deleteAction, shareAction])
+        swipeAction.performsFirstActionWithFullSwipe = false
+        
+        return swipeAction
+
     }
 }

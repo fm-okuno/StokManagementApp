@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B692BA0246D18FE007ACF82 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B692B9F246D18FE007ACF82 /* DetailViewController.swift */; };
 		8B6C1C0424515E05001CCCE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0324515E05001CCCE5 /* AppDelegate.swift */; };
 		8B6C1C0624515E05001CCCE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0524515E05001CCCE5 /* SceneDelegate.swift */; };
 		8B6C1C0824515E05001CCCE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0724515E05001CCCE5 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B692B9F246D18FE007ACF82 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8B6C1C0024515E05001CCCE5 /* StokManagementApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StokManagementApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6C1C0324515E05001CCCE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B6C1C0524515E05001CCCE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				8B6C1C0324515E05001CCCE5 /* AppDelegate.swift */,
 				8B6C1C0524515E05001CCCE5 /* SceneDelegate.swift */,
 				8B6C1C0724515E05001CCCE5 /* ViewController.swift */,
+				8B692B9F246D18FE007ACF82 /* DetailViewController.swift */,
 				8B6C1C0924515E05001CCCE5 /* Main.storyboard */,
 				8B6C1C0C24515E06001CCCE5 /* Assets.xcassets */,
 				8B6C1C0E24515E06001CCCE5 /* LaunchScreen.storyboard */,
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6C1C0824515E05001CCCE5 /* ViewController.swift in Sources */,
+				8B692BA0246D18FE007ACF82 /* DetailViewController.swift in Sources */,
 				8B6C1C0424515E05001CCCE5 /* AppDelegate.swift in Sources */,
 				8B6C1C0624515E05001CCCE5 /* SceneDelegate.swift in Sources */,
 			);

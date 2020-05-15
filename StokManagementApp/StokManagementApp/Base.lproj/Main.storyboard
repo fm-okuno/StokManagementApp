@@ -131,11 +131,53 @@
                         <outlet property="commentText" destination="k03-ZR-gKe" id="wk7-1l-0QR"/>
                         <outlet property="myUITable" destination="ySA-Dc-z9q" id="4zi-Dw-hSV"/>
                         <outlet property="timeLabel" destination="kq5-CK-tjQ" id="gdb-vP-aet"/>
+                        <segue destination="GOo-1x-gQM" kind="show" identifier="toDetailView" id="1DX-96-vIe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="118.52678571428571"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="kdd-Ge-atX">
+            <objects>
+                <viewController id="GOo-1x-gQM" customClass="DetailViewController" customModule="StokManagementApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tne-PO-jag">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PRb-bb-DQX">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="brN-2R-Dxj"/>
+                                </items>
+                            </navigationBar>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gyk-hB-apc">
+                                <rect key="frame" x="0.0" y="44" width="414" height="764"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qsa-HN-Iwo">
+                                <rect key="frame" x="0.0" y="798" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Item" id="VfH-MN-3er"/>
+                                    <barButtonItem title="Item" id="beg-sB-vLZ"/>
+                                    <barButtonItem title="Item" id="2IE-NN-ie6"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Pa8-hY-pnp"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="F4A-Gz-6me"/>
+                    <connections>
+                        <outlet property="detailTitle" destination="brN-2R-Dxj" id="epZ-Ta-crY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FPr-cx-7Q8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1150.7246376811595" y="118.52678571428571"/>
         </scene>
     </scenes>
 </document>
