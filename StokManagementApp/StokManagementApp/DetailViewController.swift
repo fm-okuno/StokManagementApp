@@ -22,6 +22,7 @@ class DetailViewController : UIViewController {
         
         //argStringに値が入っていない場合には、後続処理を継続しない
         guard let thisTitleText = titleText else {
+            detailTitle.title = "値がない"
             return
         }
         
