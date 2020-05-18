@@ -160,12 +160,12 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXL-1x-84T">
-                                <rect key="frame" x="0.0" y="798" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="754" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem systemItem="add" id="HWm-93-M0w">
                                         <connections>
-                                            <action selector="actionSelectImageButton:" destination="GOo-1x-gQM" id="sJm-7a-Seg"/>
+                                            <action selector="actionSelectImageButton:" destination="GOo-1x-gQM" id="bo5-lh-0Gq"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" systemItem="fixedSpace" id="gpA-5r-Pmy"/>
@@ -173,8 +173,8 @@
                                     <barButtonItem width="42" systemItem="fixedSpace" id="fS6-wY-20U"/>
                                     <barButtonItem systemItem="save" id="k30-5I-hKZ"/>
                                     <barButtonItem width="42" systemItem="fixedSpace" id="0GT-5p-xZR"/>
-                                    <barButtonItem width="42" systemItem="fixedSpace" id="Y9M-zZ-Ntk"/>
                                     <barButtonItem width="42" systemItem="fixedSpace" id="GFd-Nv-LgJ"/>
+                                    <barButtonItem width="42" systemItem="fixedSpace" id="CqY-ip-vxE"/>
                                     <barButtonItem systemItem="trash" id="fbp-kV-prA"/>
                                 </items>
                             </toolbar>
@@ -189,7 +189,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="F4A-Gz-6me"/>
                     <connections>
-                        <outlet property="detailTitle" destination="brN-2R-Dxj" id="epZ-Ta-crY"/>
+                        <outlet property="UiNavigationItem" destination="brN-2R-Dxj" id="WLh-Ou-CYa"/>
                         <outlet property="imageView" destination="rsW-ia-6ft" id="oS0-fV-69x"/>
                     </connections>
                 </viewController>

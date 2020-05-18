@@ -12,7 +12,7 @@ import UIKit
 class DetailViewController : UIViewController {
 
     //MARK: - IBOutlet
-    @IBOutlet private weak var detailTitle: UINavigationItem!
+    @IBOutlet private weak var UiNavigationItem: UINavigationItem!
     @IBOutlet weak var imageView: UIImageView!
     
     //MARK: - instance
@@ -25,12 +25,12 @@ class DetailViewController : UIViewController {
         
         //argStringに値が入っていない場合には、後続処理を継続しない
         guard let thisTitleText = titleText else {
-            detailTitle.title = "値がない"
+            UiNavigationItem.title = "値がない"
             return
         }
         
         //titleにtextの内容を代入して表示
-        detailTitle.title = thisTitleText
+        UiNavigationItem.title = thisTitleText
 
     }
     
