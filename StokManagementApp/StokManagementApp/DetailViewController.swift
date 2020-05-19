@@ -12,8 +12,8 @@ import UIKit
 class DetailViewController : UIViewController {
 
     //MARK: - IBOutlet
-    @IBOutlet private weak var UiNavigationItem: UINavigationItem!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private weak var uiNavigationItem: UINavigationItem!
+    @IBOutlet private weak var imageView: UIImageView!
     
     //MARK: - instance
     //titleTextにViewControllerから受け取ったamountArrayのテキストを表示
@@ -25,12 +25,12 @@ class DetailViewController : UIViewController {
         
         //argStringに値が入っていない場合には、後続処理を継続しない
         guard let thisTitleText = titleText else {
-            UiNavigationItem.title = "値がない"
+            uiNavigationItem.title = "値がない"
             return
         }
         
         //titleにtextの内容を代入して表示
-        UiNavigationItem.title = thisTitleText
+        uiNavigationItem.title = thisTitleText
 
     }
     
