@@ -31,6 +31,9 @@ class ViewController: UIViewController {
     private var additionAmountValue: Int = 0
     //セグエで受け渡す変数
     private var sendText: String?
+    //セグエで受け渡すRownの変数
+    private var sendRow: Int?
+    private var myUITableCell = UITableViewCell()
 
     //MARK: - public method
     override func viewDidLoad() {
@@ -55,6 +58,12 @@ class ViewController: UIViewController {
             
             //detailVCのtitleTextにamountArrayを入れた変数を指定
             detailVC.titleText = sendText
+            
+            guard let thisSendRow = sendRow else {
+                return
+            }
+            
+            detailVC.imageRow = thisSendRow
         }
     }
     
@@ -252,7 +261,8 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
             (ctxAction, view, completionHandler) in
             
             //sendTextに詳細ボタンが押された行に表示されているamountArrayの値を代入
-            self.sendText = self.amountArray[indexPath.row]            
+            self.sendText = self.amountArray[indexPath.row]
+            self.sendRow = indexPath.row
             self.performSegue(withIdentifier: "toDetailView", sender: nil)
             
             completionHandler(true)
@@ -266,9 +276,9 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
             self.amountArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
-            //合計値をクリアして画面を再読み込み
-            self.additionAmountValue = 0
-            self.myUITable.reloadData()
+//            //合計値をクリアして画面を再読み込み
+//            self.additionAmountValue = 0
+//            self.myUITable.reloadData()
             
             completionHandler(true)
         }
