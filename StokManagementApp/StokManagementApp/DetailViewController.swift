@@ -70,22 +70,19 @@ class DetailViewController : UIViewController {
     //写真を保存する為のactionSaveImageButton
     @IBAction private func actionSaveImageButton(_ sender: Any) {
         //現在表示中の画像データを取得
-        let image = imageView.image
-        
-        //imageが空の場合には後続処理を継続しない
-        guard let thisImage = image else {
+        //imageView.imageが空の場合には後続処理を継続しない
+        guard let thisImage = imageView.image else {
             return
         }
-        
-        let imageData = thisImage.pngData()
-        
+                
         //imageRowが空の場合には後続処理を継続しない
         guard let thisImageRow = imageRow else {
             return
         }
         
         let stringImageRow = convertString(thisImageRow)
-        
+        let imageData = thisImage.pngData()
+
         //Keyに受け取ったRow、Valueに写真を指定して本体に収納
         userDefaults.setValue(imageData, forKey: stringImageRow)
         userDefaults.synchronize()
