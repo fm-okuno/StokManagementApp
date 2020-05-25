@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,9 +14,12 @@
 		8B6C1C0B24515E05001CCCE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0924515E05001CCCE5 /* Main.storyboard */; };
 		8B6C1C0D24515E06001CCCE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0C24515E06001CCCE5 /* Assets.xcassets */; };
 		8B6C1C1024515E06001CCCE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0E24515E06001CCCE5 /* LaunchScreen.storyboard */; };
+		8B74815B24764BED006C8235 /* StokModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74815A24764BED006C8235 /* StokModel.swift */; };
+		93ACA5A4F8A1CD223D16B87E /* Pods_StokManagementApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F704CE4DCC0C87692273F4E6 /* Pods_StokManagementApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A606CB1BC81F492BEE76CA8 /* Pods-StokManagementApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StokManagementApp.debug.xcconfig"; path = "Target Support Files/Pods-StokManagementApp/Pods-StokManagementApp.debug.xcconfig"; sourceTree = "<group>"; };
 		8B692B9F246D18FE007ACF82 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8B6C1C0024515E05001CCCE5 /* StokManagementApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StokManagementApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6C1C0324515E05001CCCE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +29,9 @@
 		8B6C1C0C24515E06001CCCE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B6C1C0F24515E06001CCCE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B6C1C1124515E06001CCCE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B74815A24764BED006C8235 /* StokModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StokModel.swift; sourceTree = "<group>"; };
+		BFE8750AC4A1C5AF01C19159 /* Pods-StokManagementApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StokManagementApp.release.xcconfig"; path = "Target Support Files/Pods-StokManagementApp/Pods-StokManagementApp.release.xcconfig"; sourceTree = "<group>"; };
+		F704CE4DCC0C87692273F4E6 /* Pods_StokManagementApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StokManagementApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +39,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93ACA5A4F8A1CD223D16B87E /* Pods_StokManagementApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50849F70E99B4C0437A84322 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4A606CB1BC81F492BEE76CA8 /* Pods-StokManagementApp.debug.xcconfig */,
+				BFE8750AC4A1C5AF01C19159 /* Pods-StokManagementApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		8B6C1BF724515E05001CCCE5 = {
 			isa = PBXGroup;
 			children = (
 				8B6C1C0224515E05001CCCE5 /* StokManagementApp */,
 				8B6C1C0124515E05001CCCE5 /* Products */,
+				50849F70E99B4C0437A84322 /* Pods */,
+				F52D84F0E806C90A18531BB7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,12 +80,21 @@
 				8B6C1C0524515E05001CCCE5 /* SceneDelegate.swift */,
 				8B6C1C0724515E05001CCCE5 /* ViewController.swift */,
 				8B692B9F246D18FE007ACF82 /* DetailViewController.swift */,
+				8B74815A24764BED006C8235 /* StokModel.swift */,
 				8B6C1C0924515E05001CCCE5 /* Main.storyboard */,
 				8B6C1C0C24515E06001CCCE5 /* Assets.xcassets */,
 				8B6C1C0E24515E06001CCCE5 /* LaunchScreen.storyboard */,
 				8B6C1C1124515E06001CCCE5 /* Info.plist */,
 			);
 			path = StokManagementApp;
+			sourceTree = "<group>";
+		};
+		F52D84F0E806C90A18531BB7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F704CE4DCC0C87692273F4E6 /* Pods_StokManagementApp.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B6C1C1424515E06001CCCE5 /* Build configuration list for PBXNativeTarget "StokManagementApp" */;
 			buildPhases = (
+				B33AC040E19A73D2971A971E /* [CP] Check Pods Manifest.lock */,
 				8B6C1BFC24515E05001CCCE5 /* Sources */,
 				8B6C1BFD24515E05001CCCE5 /* Frameworks */,
 				8B6C1BFE24515E05001CCCE5 /* Resources */,
+				EDBAD57C062E800D99281FE3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -136,6 +165,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B33AC040E19A73D2971A971E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StokManagementApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EDBAD57C062E800D99281FE3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StokManagementApp/Pods-StokManagementApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StokManagementApp/Pods-StokManagementApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StokManagementApp/Pods-StokManagementApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8B6C1BFC24515E05001CCCE5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -145,6 +216,7 @@
 				8B692BA0246D18FE007ACF82 /* DetailViewController.swift in Sources */,
 				8B6C1C0424515E05001CCCE5 /* AppDelegate.swift in Sources */,
 				8B6C1C0624515E05001CCCE5 /* SceneDelegate.swift in Sources */,
+				8B74815B24764BED006C8235 /* StokModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +358,7 @@
 		};
 		8B6C1C1524515E06001CCCE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A606CB1BC81F492BEE76CA8 /* Pods-StokManagementApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -303,6 +376,7 @@
 		};
 		8B6C1C1624515E06001CCCE5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFE8750AC4A1C5AF01C19159 /* Pods-StokManagementApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

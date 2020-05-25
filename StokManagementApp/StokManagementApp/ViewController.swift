@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import RealmSwift
 
 class ViewController: UIViewController {
     
@@ -31,9 +32,14 @@ class ViewController: UIViewController {
     private var additionAmountValue: Int = 0
     //セグエで受け渡す変数
     private var sendText: String?
-    //セグエで受け渡すRownの変数
-    private var sendRow: Int?
+    //セグエで受け渡すPrimaryKey
+    private var sendPrimaryKey: String?
+    //Realm
+    private let realmInstance = try! Realm()
+    
     private var myUITableCell = UITableViewCell()
+    
+    
 
     //MARK: - public method
     override func viewDidLoad() {
@@ -58,12 +64,6 @@ class ViewController: UIViewController {
             
             //detailVCのtitleTextにamountArrayを入れた変数を指定
             detailVC.titleText = sendText
-            
-            guard let thisSendRow = sendRow else {
-                return
-            }
-            
-            detailVC.imageRow = thisSendRow
         }
     }
     
@@ -120,7 +120,18 @@ class ViewController: UIViewController {
         //追加ボタン押下で選択が全解除される為、一度additionAmountValueを初期化
         additionAmountValue = 0
         
-        myUITable.reloadData()
+        myUITable.reloadData()        
+        
+        let instancedStokModel: StokModel = StokModel()
+        guard let intAmountData = Int(thisAmountData) else {
+            return
+        }
+
+        instancedStokModel.amount = intAmountData
+        instancedStokModel.comment = thisCommentData
+        instancedStokModel.createDate = thisTimeData
+
+        print(instancedStokModel)
     }
     
     //数量を入力する為のactionChangeAmountButton
@@ -262,7 +273,6 @@ extension ViewController : UITableViewDataSource, UITableViewDelegate {
             
             //sendTextに詳細ボタンが押された行に表示されているamountArrayの値を代入
             self.sendText = self.amountArray[indexPath.row]
-            self.sendRow = indexPath.row
             self.performSegue(withIdentifier: "toDetailView", sender: nil)
             
             completionHandler(true)
