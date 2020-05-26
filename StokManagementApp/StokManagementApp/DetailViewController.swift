@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class DetailViewController : UIViewController {
 
@@ -18,10 +19,13 @@ class DetailViewController : UIViewController {
     //MARK: - instance
     //titleTextに受け取ったamountArrayのテキストを表示
     var titleText: String?
-    //詳細が押下されたセルのIndexPath
-    var imageRow: Int?
+    //PrimaryKeyを受け取る
+    var stockId: String?
     //写真を保存しておく為のuserDefaults
     let userDefaults = UserDefaults.standard
+    let stockModel = StockModel()
+    let realm = try! Realm()
+
 
     //MARK: - public method
     override func viewDidLoad() {
@@ -35,28 +39,6 @@ class DetailViewController : UIViewController {
         
         //titleにtextの内容を代入して表示
         uiNavigationItem.title = thisTitleText
-        
-        //imageRowに値が入っていない場合には、後続処理を継続しない
-        guard let thisImageRow = imageRow else {
-            return
-        }
-        
-        //行番号thisImageRowをKeyとして使用するためにStringに変換
-        let stringImageRow = convertString(thisImageRow)
-
-        //詳細ボタンが押下されたセルに写真が保存されていた場合にはimageViewに保存してある写真を表示
-        if userDefaults.object(forKey: stringImageRow) != nil {
-            let canNotShowImage = userDefaults.data(forKey: stringImageRow)
-            
-            //rowImageDataが空の場合には、後続処理を継続しない
-            guard let thisCanNotShowImage = canNotShowImage else {
-                return
-            }
-            
-            //Data型をUIImage型に変換
-            let canShowImage = UIImage(data: thisCanNotShowImage)
-            imageView.image = canShowImage
-        }
     }
     
     //MARK: - private method
@@ -74,19 +56,10 @@ class DetailViewController : UIViewController {
         guard let thisImage = imageView.image else {
             return
         }
-                
-        //imageRowが空の場合には後続処理を継続しない
-        guard let thisImageRow = imageRow else {
-            return
-        }
         
-        let stringImageRow = convertString(thisImageRow)
         let imageData = thisImage.pngData()
-
-        //Keyに受け取ったRow、Valueに写真を指定して本体に収納
-        userDefaults.setValue(imageData, forKey: stringImageRow)
-        userDefaults.synchronize()
     }
+    
     //+ボタンを押下でカメラロールを開き、写真を選択
     @IBAction private func actionSelectImageButton(_ sender: Any) {
             //写真を選ぶビュー
