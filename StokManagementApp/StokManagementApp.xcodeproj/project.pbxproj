@@ -14,7 +14,7 @@
 		8B6C1C0B24515E05001CCCE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0924515E05001CCCE5 /* Main.storyboard */; };
 		8B6C1C0D24515E06001CCCE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0C24515E06001CCCE5 /* Assets.xcassets */; };
 		8B6C1C1024515E06001CCCE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C0E24515E06001CCCE5 /* LaunchScreen.storyboard */; };
-		8B74815B24764BED006C8235 /* StokModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74815A24764BED006C8235 /* StokModel.swift */; };
+		8B74815B24764BED006C8235 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B74815A24764BED006C8235 /* StockModel.swift */; };
 		93ACA5A4F8A1CD223D16B87E /* Pods_StokManagementApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F704CE4DCC0C87692273F4E6 /* Pods_StokManagementApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +29,7 @@
 		8B6C1C0C24515E06001CCCE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B6C1C0F24515E06001CCCE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B6C1C1124515E06001CCCE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B74815A24764BED006C8235 /* StokModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StokModel.swift; sourceTree = "<group>"; };
+		8B74815A24764BED006C8235 /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
 		BFE8750AC4A1C5AF01C19159 /* Pods-StokManagementApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StokManagementApp.release.xcconfig"; path = "Target Support Files/Pods-StokManagementApp/Pods-StokManagementApp.release.xcconfig"; sourceTree = "<group>"; };
 		F704CE4DCC0C87692273F4E6 /* Pods_StokManagementApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StokManagementApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -80,7 +80,7 @@
 				8B6C1C0524515E05001CCCE5 /* SceneDelegate.swift */,
 				8B6C1C0724515E05001CCCE5 /* ViewController.swift */,
 				8B692B9F246D18FE007ACF82 /* DetailViewController.swift */,
-				8B74815A24764BED006C8235 /* StokModel.swift */,
+				8B74815A24764BED006C8235 /* StockModel.swift */,
 				8B6C1C0924515E05001CCCE5 /* Main.storyboard */,
 				8B6C1C0C24515E06001CCCE5 /* Assets.xcassets */,
 				8B6C1C0E24515E06001CCCE5 /* LaunchScreen.storyboard */,
@@ -216,7 +216,7 @@
 				8B692BA0246D18FE007ACF82 /* DetailViewController.swift in Sources */,
 				8B6C1C0424515E05001CCCE5 /* AppDelegate.swift in Sources */,
 				8B6C1C0624515E05001CCCE5 /* SceneDelegate.swift in Sources */,
-				8B74815B24764BED006C8235 /* StokModel.swift in Sources */,
+				8B74815B24764BED006C8235 /* StockModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,7 +368,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.freemake-okuno.StokManagementApp";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = StokManagementApp;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -386,7 +386,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.freemake-okuno.StokManagementApp";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = StokManagementApp;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -20,10 +20,10 @@ class DetailViewController : UIViewController {
     //titleTextに受け取ったamountArrayのテキストを表示
     var titleText: String?
     //PrimaryKeyを受け取る
-    var stokModelPrimaryKey: String?
+    var stockId: String?
     //写真を保存しておく為のuserDefaults
     let userDefaults = UserDefaults.standard
-    let instancedStokModel: StokModel = StokModel()
+    let instancedStockModel: StockModel = StockModel()
     let realm = try! Realm()
 
 

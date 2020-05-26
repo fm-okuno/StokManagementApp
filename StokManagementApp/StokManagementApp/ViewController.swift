@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     //セグエで受け渡す変数
     private var sendText: String?
     //セグエで受け渡すPrimaryKey
-    private var sendPrimaryKey: String?
+    private var sendStockId: String?
     //Realm
     private let realmInstance = try! Realm()
     
@@ -55,6 +55,12 @@ class ViewController: UIViewController {
                                      userInfo: nil,
                                      repeats: true
         )
+        
+        //DBにダミーオブジェクトを追加
+        let dummyStockModel: StockModel = StockModel.create(realm: realmInstance, asDummy: true)
+        try! realmInstance.write {
+            realmInstance.add(dummyStockModel)
+        }
     }
     
     //segueで遷移時の処理
@@ -122,16 +128,18 @@ class ViewController: UIViewController {
         
         myUITable.reloadData()        
         
-        let instancedStokModel: StokModel = StokModel()
+        let instancedStockModel: StockModel = StockModel()
         guard let intAmountData = Int(thisAmountData) else {
             return
         }
+        let addStockData: StockModel = StockModel.create(realm: realmInstance)
+        try! realmInstance.write {
+            addStockData.amount = intAmountData
+            addStockData.createDate = thisTimeData
+            addStockData.comment = thisCommentData
+        }
 
-        instancedStokModel.amount = intAmountData
-        instancedStokModel.comment = thisCommentData
-        instancedStokModel.createDate = thisTimeData
-
-        print(instancedStokModel)
+        print(instancedStockModel)
     }
     
     //数量を入力する為のactionChangeAmountButton
