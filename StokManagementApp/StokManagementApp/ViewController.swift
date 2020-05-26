@@ -19,23 +19,25 @@ class ViewController: UIViewController {
     @IBOutlet private weak var myUITable: UITableView!
     
     //MARK: - instance クラスで使用する変数やインスタンス
-    private var amount: Int = 0
+    private var amount = 0
     private var amountArray: [String] = []
-    private var arrayCounter: Int = 0
+    private var arrayCounter = 0
     //Timerをインスタンス化
     private var timer = Timer()
     //時刻のデータを入れる為のtimerData
-    private var timerData: String = ""
+    private var timerData = ""
     //入力された在庫数を入れる為のinputAmountArray
     private var inputAmountArray: [Int] = []
     //選択されたセルの合計値を保存する為のadditionAmountValue
-    private var additionAmountValue: Int = 0
+    private var additionAmountValue = 0
     //セグエで受け渡す変数
     private var sendText: String?
     //セグエで受け渡すPrimaryKey
     private var sendStockId: String?
     //Realm
     private let realmInstance = try! Realm()
+    //StockModelのインスタンス化
+    let stockModel = StockModel()
     
     private var myUITableCell = UITableViewCell()
     
@@ -91,7 +93,7 @@ class ViewController: UIViewController {
     //追加ボタン
     @IBAction private func actionAddAmountButton(_ sender: UIButton) {
         //String型のamountDataにamountLabelの値を代入
-        var amountData: String? = amountLabel.text
+        var amountData = amountLabel.text
         
         //amountDataの値が"数量9,999"（未入力）の場合には、0を代入
         if amountData == "数量9,999" {
@@ -105,14 +107,14 @@ class ViewController: UIViewController {
         }
         
         //timeDataにHH:mm:ssに整形済みの現在時刻を代入
-        let timeData: String? = timeLabel.text
+        let timeData = timeLabel.text
         //timeDataがnilの場合には後続処理を継続しない
         guard let thisTimeData = timeData else {
             return
         }
         
         //commentDataにテキスト入力欄の文字列を代入
-        let commentData: String? = commentText.text
+        let commentData = commentText.text
         //commentDataがnilの場合には後続処理を継続しない
         guard let thisCommentData = commentData else {
             return
@@ -128,7 +130,6 @@ class ViewController: UIViewController {
         
         myUITable.reloadData()        
         
-        let instancedStockModel: StockModel = StockModel()
         guard let intAmountData = Int(thisAmountData) else {
             return
         }
@@ -138,8 +139,6 @@ class ViewController: UIViewController {
             addStockData.createDate = thisTimeData
             addStockData.comment = thisCommentData
         }
-
-        print(instancedStockModel)
     }
     
     //数量を入力する為のactionChangeAmountButton

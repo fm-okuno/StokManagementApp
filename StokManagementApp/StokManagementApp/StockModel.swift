@@ -10,11 +10,11 @@ import Foundation
 import RealmSwift
 
 class StockModel: Object {
-    @objc dynamic var id: Int = 0
-    @objc dynamic var amount: Int = 0
+    @objc dynamic var id = 0
+    @objc dynamic var amount = 0
     @objc dynamic var comment: String?
     @objc dynamic var amountImage: Data?
-    @objc dynamic var createDate: String = ""
+    @objc dynamic var createDate = ""
     //プライマリキーを設定
     override static func primaryKey() -> String? {
         return "id"

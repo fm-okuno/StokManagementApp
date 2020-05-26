@@ -23,7 +23,7 @@ class DetailViewController : UIViewController {
     var stockId: String?
     //写真を保存しておく為のuserDefaults
     let userDefaults = UserDefaults.standard
-    let instancedStockModel: StockModel = StockModel()
+    let stockModel = StockModel()
     let realm = try! Realm()
 
 
