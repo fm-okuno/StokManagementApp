@@ -43,10 +43,6 @@ class DetailViewController : UIViewController {
     
     //MARK: - private method
     
-    private func convertString(_ to: Int) -> String {
-        return String(to)
-    }
-    
     //MARK: - IBAction
     
     //写真を保存する為のactionSaveImageButton

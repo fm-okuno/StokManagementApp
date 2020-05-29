@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8B6C1BFF24515E05001CCCE5"
-               BuildableName = "StockManagementApp.app"
+               BuildableName = "StokManagementApp.app"
                BlueprintName = "StokManagementApp"
                ReferencedContainer = "container:StokManagementApp.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B6C1BFF24515E05001CCCE5"
-            BuildableName = "StockManagementApp.app"
+            BuildableName = "StokManagementApp.app"
             BlueprintName = "StokManagementApp"
             ReferencedContainer = "container:StokManagementApp.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B6C1BFF24515E05001CCCE5"
-            BuildableName = "StockManagementApp.app"
+            BuildableName = "StokManagementApp.app"
             BlueprintName = "StokManagementApp"
             ReferencedContainer = "container:StokManagementApp.xcodeproj">
          </BuildableReference>
