@@ -47,11 +47,6 @@ class ViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        //セル削除の許可
-        func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-            return true
-        }
-        
         //1秒毎にshowNowTimeメソッドを実行する
         Timer.scheduledTimer(timeInterval: 1,
                              target: self,
@@ -60,7 +55,7 @@ class ViewController: UIViewController {
                              repeats: true
         )
     }
-
+    
     
     //segueで遷移時の処理
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -73,8 +68,8 @@ class ViewController: UIViewController {
             return
         }
         
-            //detailVCのtitleTextにamountArrayを入れた変数を指定
-            detailVC.titleText = sendText
+        //detailVCのtitleTextにamountArrayを入れた変数を指定
+        detailVC.titleText = sendText
     }
     
     //MARK: - IBAction
@@ -88,36 +83,22 @@ class ViewController: UIViewController {
         
         tableView.reloadData()
     }
-    
-
-    
+        
     //追加ボタン
     @IBAction private func actionAddStockButton(_ sender: UIButton) {
         
         //String型のamountDataにamountLabelの値を代入
         //amountDataがnilの場合には後続処理を継続しない
-        guard var amountData = amountLabel.text else {
+        guard let amountData = amountLabel.text else {
             return
         }
-        
-        //amountDataの値が"数量9,999"（未入力）の場合には、0を代入
-        //値が入っている場合には、そのまま変数amountDataに代入
-        if amountData == "数量9,999" {
-            amountData = "0"
-        }
-        
-        //amountDataをInt型に変換できない場合には後続処理を継続しない
-        //DBへのデータ追加時に使用
-        guard let intAmountData = Int(amountData) else {
-            return
-        }
-        
+                
         //timeDataにHH:mm:ssに整形済みの現在時刻を代入
         //timeDataがnilの場合には後続処理を継続しない
         guard let timeData = timeLabel.text else {
             return
         }
-
+        
         //commentDataにテキスト入力欄の文字列を代入
         //commentDataがnilの場合には後続処理を継続しない
         guard let commentData = commentTextField.text else {
@@ -125,7 +106,7 @@ class ViewController: UIViewController {
         }
         
         //amountArrayにString形式で各データを保存
-        amountArray += [("数量：\(amountData)　時刻：\(timeData)　コメント：\(commentData)")]
+        amountArray += [("数量：\(judgeInputExistence(amountData))　時刻：\(timeData)　コメント：\(commentData)")]
         
         //カンマのついていない在庫数をinputAmountArrayに追加
         inputAmountArray.append(amount)
@@ -152,17 +133,17 @@ class ViewController: UIViewController {
             preferredStyle: UIAlertController.Style.alert)
         
         let action = UIAlertAction(title: "OK",
-                                          style: UIAlertAction.Style.default,
-                                          handler: nil)
+                                   style: UIAlertAction.Style.default,
+                                   handler: nil)
         
         alert.addAction(action)
-
+        
         //実際にAlertを表示する
         present(alert, animated: true, completion: nil)
     }
     
     //MARK: - private method
-        
+    
     //Int型の値を受け取り、3桁毎にカンマで区切る「addComma」メソッド
     private func convertAmountToString(_ forValue: Int) -> String? {
         //3桁毎にカンマで区切る設定
@@ -193,42 +174,60 @@ class ViewController: UIViewController {
     }
 }
 
+//在庫数が入力されているか判定し、未入力であれば0を、入力されていればその値を代入する
+private func judgeInputExistence(_ forString: String) -> String {
+    var valueAssignedString = ""
+    if forString == "数量9,999" {
+        valueAssignedString = "0"
+        return valueAssignedString
+    } else {
+        valueAssignedString = forString
+        return valueAssignedString
+    }
+}
+
 //MARK: - extension
 //extensinを用いてセルの生成部分を分割
 extension ViewController : UITableViewDelegate {
-        //セルがスワイプされた際の動作
-        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
-            // 詳細ボタンのアクションを設定
-            //詳細ボタンを押下で詳細詳細画面へ遷移
-            let shareAction = UIContextualAction(style: .normal  , title: "詳細") {
-                (ctxAction, view, completionHandler) in
-                
-                //sendTextに詳細ボタンが押された行に表示されているamountArrayの値を代入
-                self.sendText = self.amountArray[indexPath.row]
-                self.performSegue(withIdentifier: "toDetailViewController", sender: nil)
-                
-                completionHandler(true)
-            }
-
-            // 削除のアクションを設定する
-            let deleteAction = UIContextualAction(style: .destructive, title:"削除") {
-                (ctxAction, view, completionHandler) in
-                
-                //削除ボタンが押された行のデータを配列から削除
-                self.amountArray.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                
-                completionHandler(true)
-            }
-
-            // スワイプでの削除を無効化して設定する
-            let swipeAction = UISwipeActionsConfiguration(actions:[deleteAction, shareAction])
-            swipeAction.performsFirstActionWithFullSwipe = false
+    
+    //セル削除の許可
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    //セルがスワイプされた際の動作
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        // 詳細ボタンのアクションを設定
+        //詳細ボタンを押下で詳細詳細画面へ遷移
+        let shareAction = UIContextualAction(style: .normal  , title: "詳細") {
+            (ctxAction, view, completionHandler) in
             
-            return swipeAction
-
+            //sendTextに詳細ボタンが押された行に表示されているamountArrayの値を代入
+            self.sendText = self.amountArray[indexPath.row]
+            self.performSegue(withIdentifier: "toDetailViewController", sender: nil)
+            
+            completionHandler(true)
         }
+        
+        // 削除のアクションを設定する
+        let deleteAction = UIContextualAction(style: .destructive, title:"削除") {
+            (ctxAction, view, completionHandler) in
+            
+            //削除ボタンが押された行のデータを配列から削除
+            self.amountArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            completionHandler(true)
+        }
+        
+        // スワイプでの削除を無効化して設定する
+        let swipeAction = UISwipeActionsConfiguration(actions:[deleteAction, shareAction])
+        swipeAction.performsFirstActionWithFullSwipe = false
+        
+        return swipeAction
+        
+    }
     
     //セル選択時の動作
     //複数選択可能、選択されたセルの値をsumAmountに加算
@@ -256,7 +255,7 @@ extension ViewController : UITableViewDelegate {
         
         //選択解除されたセルの在庫分をマイナス
         sumAmount -= inputAmountArray[cell.tag]
-
+        
         cell.accessoryType = .none
         
         //セル生成時と同じ条件で再度色を設定（元の色に戻す）
@@ -289,7 +288,7 @@ extension ViewController : UITableViewDataSource {
             //2で割れない場合（奇数である場合）には、背景色を青色にする。
             cell = UITableViewCell(style: .default, reuseIdentifier: "amountCell2")
             cell.backgroundColor = .systemBlue
-
+            
         }
         
         cell.textLabel?.text = amountArray[indexPath.row]
