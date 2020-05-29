@@ -86,7 +86,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="追加"/>
                                 <connections>
-                                    <action selector="actionAddAmountButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rBZ-xn-Sxa"/>
+                                    <action selector="actionAddStockButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YlQ-4d-RO2"/>
                                 </connections>
                             </button>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="9999" translatesAutoresizingMaskIntoConstraints="NO" id="e9C-ya-j27">
@@ -131,10 +131,10 @@
                     <navigationItem key="navigationItem" id="n2n-wA-H07"/>
                     <connections>
                         <outlet property="amountLabel" destination="fzf-Vy-cBa" id="bfF-si-M0X"/>
-                        <outlet property="commentText" destination="k03-ZR-gKe" id="wk7-1l-0QR"/>
-                        <outlet property="myUITable" destination="ySA-Dc-z9q" id="4zi-Dw-hSV"/>
+                        <outlet property="commentTextField" destination="k03-ZR-gKe" id="FFX-ae-S2V"/>
+                        <outlet property="tableView" destination="ySA-Dc-z9q" id="mXz-hz-hR7"/>
                         <outlet property="timeLabel" destination="kq5-CK-tjQ" id="gdb-vP-aet"/>
-                        <segue destination="GOo-1x-gQM" kind="show" identifier="toDetailView" id="1DX-96-vIe"/>
+                        <segue destination="GOo-1x-gQM" kind="show" identifier="toDetailViewController" id="1DX-96-vIe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -207,7 +207,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="F4A-Gz-6me"/>
                     <connections>
-                        <outlet property="UiNavigationItem" destination="brN-2R-Dxj" id="WLh-Ou-CYa"/>
                         <outlet property="imageView" destination="rsW-ia-6ft" id="oS0-fV-69x"/>
                         <outlet property="uiNavigationItem" destination="brN-2R-Dxj" id="Wuz-2w-ZGN"/>
                     </connections>

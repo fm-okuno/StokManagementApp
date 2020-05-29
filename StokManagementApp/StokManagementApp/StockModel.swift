@@ -15,12 +15,12 @@ class StockModel: Object {
     @objc dynamic var comment: String?
     @objc dynamic var amountImage: Data?
     @objc dynamic var createDate = ""
-    //プライマリキーを設定
+    
     override static func primaryKey() -> String? {
         return "id"
     }
     
-    //IDをincrementして返す
+    //IDをインクリメントして返す
     static func newID(realm: Realm) -> Int {
         if let stockModel = realm.objects(StockModel.self).sorted(byKeyPath: "id").last {
             return stockModel.id + 1
@@ -28,17 +28,17 @@ class StockModel: Object {
             return 1
         }
     }
-    //incrementされたIDを持つ新規stockModelインスタンスを返す
-    //一度使用されたIDは再利用されない
+    
+    //インクリメントされたIDを持つ、新規StockModelオブジェクトを返す
     static func create(realm: Realm, asDummy: Bool = false) -> StockModel {
         if asDummy {
-            let newDummyStockModel: StockModel = StockModel()
+            let newDummyStockModel = StockModel()
             newDummyStockModel.id = StockModel.newID(realm: realm)
             return newDummyStockModel
         } else {
-            let lastID: Int = (realm.objects(StockModel.self).sorted(byKeyPath: "id").last?.id)!
-            let dummyStockModel: StockModel = realm.object(ofType: StockModel.self, forPrimaryKey: lastID)!
-            let newDummyStockModel: StockModel = StockModel.create(realm: realm, asDummy: true)
+            let lastID = (realm.objects(StockModel.self).sorted(byKeyPath: "id").last?.id)!
+            let dummyStockModel = realm.object(ofType: StockModel.self, forPrimaryKey: lastID)!
+            let newDummyStockModel = StockModel.create(realm: realm, asDummy: true)
             try! realm.write {
                 realm.add(newDummyStockModel)
             }
@@ -46,3 +46,5 @@ class StockModel: Object {
         }
     }
 }
+
+
