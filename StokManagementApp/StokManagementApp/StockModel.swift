@@ -30,20 +30,10 @@ class StockModel: Object {
     }
     
     //インクリメントされたIDを持つ、新規StockModelオブジェクトを返す
-    static func create(realm: Realm, asDummy: Bool = false) -> StockModel {
-        if asDummy {
-            let newDummyStockModel = StockModel()
-            newDummyStockModel.id = StockModel.newID(realm: realm)
-            return newDummyStockModel
-        } else {
-            let lastID = (realm.objects(StockModel.self).sorted(byKeyPath: "id").last?.id)!
-            let dummyStockModel = realm.object(ofType: StockModel.self, forPrimaryKey: lastID)!
-            let newDummyStockModel = StockModel.create(realm: realm, asDummy: true)
-            try! realm.write {
-                realm.add(newDummyStockModel)
-            }
-            return dummyStockModel
-        }
+    static func create(realm: Realm) -> StockModel {
+        let stockModel = StockModel()
+        stockModel.id = newID(realm: realm)
+        return stockModel
     }
 }
 
