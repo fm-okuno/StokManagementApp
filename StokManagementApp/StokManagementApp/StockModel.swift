@@ -30,11 +30,24 @@ class StockModel: Object {
     }
     
     //インクリメントされたIDを持つ、新規StockModelオブジェクトを返す
-    static func create(realm: Realm) -> StockModel {
-        let stockModel = StockModel()
-        stockModel.id = newID(realm: realm)
-        return stockModel
+        static func create(realm: Realm) -> StockModel {
+            let stockModel = StockModel()
+            stockModel.id = newID(realm: realm)
+            return stockModel
+    }
+    
+    //DBにデータを追加する為のaddStockDataメソッド
+    func addStockData(amount: Int, comment: String?, amountImage: Data?, createDate: String) -> StockModel {
+        let realm = try! Realm()
+        let addStockData = StockModel.create(realm: realm)
+        addStockData.amount = amount
+        addStockData.comment = comment
+        addStockData.amountImage = amountImage
+        addStockData.createDate = createDate
+        try! realm.write {
+            realm.add(addStockData)
+        }
+        //printで確認するためにaddStockDataを返す
+        return addStockData
     }
 }
-
-

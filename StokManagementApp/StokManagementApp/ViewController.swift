@@ -111,8 +111,7 @@ class ViewController: UIViewController {
         inputAmountArray.append(amount)
 
         //DBにデータを追加（現在は追加できたかの確認のためにprintで出力）
-        print(addStockData(amount: amount, comment: commentData, amountImage: nil, createDate: timeData))
-
+        print(stockModel.addStockData(amount: amount, comment: commentData, amountImage: nil, createDate: timeData))
             
         //追加ボタン押下で選択が全解除される為、一度sumAmountを初期化
         sumAmount = 0
@@ -147,20 +146,6 @@ class ViewController: UIViewController {
     }
     
     //MARK: - private method
-    
-    //DBにデータを追加する為のaddStockDataメソッド
-    private func addStockData(amount: Int, comment: String?, amountImage: Data?, createDate: String) -> StockModel {
-        let addStockData = StockModel.create(realm: realm)
-        addStockData.amount = amount
-        addStockData.comment = comment
-        addStockData.amountImage = amountImage
-        addStockData.createDate = createDate
-        try! realm.write {
-            realm.add(addStockData)
-        }
-        //printで確認するためにaddStockDataを返す
-        return addStockData
-    }
     
     //Int型の値を受け取り、3桁毎にカンマで区切る「addComma」メソッド
     private func convertAmountToString(_ forValue: Int) -> String? {
