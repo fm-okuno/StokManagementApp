@@ -56,7 +56,6 @@ class ViewController: UIViewController {
         )
     }
     
-    
     //segueで遷移時の処理
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
@@ -104,16 +103,20 @@ class ViewController: UIViewController {
         guard let commentData = commentTextField.text else {
             return
         }
-        
+
         //amountArrayにString形式で各データを保存
         amountArray += [("数量：\(judgeInputExistence(amountData))　時刻：\(timeData)　コメント：\(commentData)")]
         
         //カンマのついていない在庫数をinputAmountArrayに追加
         inputAmountArray.append(amount)
-        
+
+        //DBにデータを追加（現在は追加できたかの確認のためにprintで出力）
+        print(stockModel.addStockData(amount: amount, comment: commentData, amountImage: nil, createDate: timeData))
+            
         //追加ボタン押下で選択が全解除される為、一度sumAmountを初期化
         sumAmount = 0
         
+        //テーブルを更新
         tableView.reloadData()
     }
     
