@@ -47,6 +47,12 @@ class ViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        //DB作成後、まずダミーオブジェクトを追加
+        let dummyStockModel = StockModel.create(asDummy: true)
+        try! realm.write {
+            realm.add(dummyStockModel)
+        }
+        
         //1秒毎にshowNowTimeメソッドを実行する
         Timer.scheduledTimer(timeInterval: 1,
                              target: self,
@@ -110,9 +116,9 @@ class ViewController: UIViewController {
         //カンマのついていない在庫数をinputAmountArrayに追加
         inputAmountArray.append(amount)
 
-        //DBにデータを追加（現在は追加できたかの確認のためにprintで出力）
-        print(stockModel.addStockData(amount: amount, comment: commentData, amountImage: nil, createDate: timeData))
-            
+        //DBにデータを追加
+        stockModel.addStockData(amount: amount, comment: commentData, amountImage: nil, createDate: timeData)
+    
         //追加ボタン押下で選択が全解除される為、一度sumAmountを初期化
         sumAmount = 0
         

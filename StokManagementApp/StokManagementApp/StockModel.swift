@@ -30,25 +30,34 @@ class StockModel: Object {
     }
     
     //インクリメントされたIDを持つ、新規StockModelオブジェクトを返す
-        static func create() -> StockModel {
-            let realm = try! Realm()
-            let stockModel = StockModel()
-            stockModel.id = newID(realm: realm)
-            return stockModel
+    static func create(asDummy: Bool = false) -> StockModel {
+        let realm = try! Realm()
+        if asDummy {
+            let newDummyStockModel = StockModel()
+            newDummyStockModel.id = StockModel.newID(realm: realm)
+            return newDummyStockModel
+        } else {
+            let lastID = (realm.objects(StockModel.self).sorted(byKeyPath: "id").last?.id)!
+            let dummyStockModel = realm.object(ofType: StockModel.self, forPrimaryKey: lastID)!
+            let newDummyStockModel = StockModel.create(asDummy: true)
+            try! realm.write {
+                realm.add(newDummyStockModel)
+            }
+            return dummyStockModel
+        }
     }
     
     //DBにデータを追加する為のaddStockDataメソッド
-    func addStockData(amount: Int, comment: String?, amountImage: Data?, createDate: String) -> StockModel {
+    func addStockData(amount: Int, comment: String?, amountImage: Data?, createDate: String) {
         let realm = try! Realm()
         let addStockData = StockModel.create()
-        addStockData.amount = amount
-        addStockData.comment = comment
-        addStockData.amountImage = amountImage
-        addStockData.createDate = createDate
         try! realm.write {
-            realm.add(addStockData)
+            addStockData.amount = amount
+            addStockData.comment = comment
+            addStockData.amountImage = amountImage
+            addStockData.createDate = createDate
         }
-        //printで確認するためにaddStockDataを返す
-        return addStockData
+        //DBに追加できているかの確認用
+        print(addStockData)
     }
 }
