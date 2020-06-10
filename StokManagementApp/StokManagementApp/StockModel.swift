@@ -15,7 +15,8 @@ class StockModel: Object {
     @objc dynamic var comment: String?
     @objc dynamic var amountImage: Data?
     @objc dynamic var createDate = ""
-    
+    @objc dynamic var deleteFlag = "0"
+     
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -30,34 +31,50 @@ class StockModel: Object {
     }
     
     //インクリメントされたIDを持つ、新規StockModelオブジェクトを返す
-    static func create(asDummy: Bool = false) -> StockModel {
+    static func create() -> StockModel {
         let realm = try! Realm()
-        if asDummy {
-            let newDummyStockModel = StockModel()
-            newDummyStockModel.id = StockModel.newID(realm: realm)
-            return newDummyStockModel
-        } else {
-            let lastID = (realm.objects(StockModel.self).sorted(byKeyPath: "id").last?.id)!
-            let dummyStockModel = realm.object(ofType: StockModel.self, forPrimaryKey: lastID)!
-            let newDummyStockModel = StockModel.create(asDummy: true)
-            try! realm.write {
-                realm.add(newDummyStockModel)
-            }
-            return dummyStockModel
-        }
+        let stockModel = StockModel()
+        stockModel.id = newID(realm: realm)
+        return stockModel
     }
     
     //DBにデータを追加する為のaddStockDataメソッド
     func addStockData(amount: Int, comment: String?, amountImage: Data?, createDate: String) {
         let realm = try! Realm()
         let addStockData = StockModel.create()
+        addStockData.amount = amount
+        addStockData.comment = comment
+        addStockData.amountImage = amountImage
+        addStockData.createDate = createDate
         try! realm.write {
-            addStockData.amount = amount
-            addStockData.comment = comment
-            addStockData.amountImage = amountImage
-            addStockData.createDate = createDate
+            realm.add(addStockData)
         }
-        //DBに追加できているかの確認用
         print(addStockData)
+    }
+    
+    //削除フラグのないレコードの件数を取得
+    func getRealmRecodeValue() -> Int {
+        let realm = try! Realm()
+        let results = realm.objects(StockModel.self).filter("deleteFlag == '0'")
+        let intResults = results.count
+        return intResults
+    }
+    
+    //セルに表示する文字列を生成するcreateCellData
+    func createCellData() -> [String] {
+        let realm = try! Realm()
+        var resultArray = [""]
+        let getDataQuery = realm.objects(StockModel.self).filter("deleteFlag == '0'")
+        for data in getDataQuery {
+            resultArray = ["数量：\(data.amount)登録日時：\(data.createDate)コメント：\(data.comment ?? "")"]
+        }
+        return resultArray
+    }
+    
+    //セルからデータを取り出す為のgetRealmRecodeData
+    func getRealmRecodeData(fromIndexRow: Int) -> Results<StockModel> {
+        let realm = try! Realm()
+        let results = realm.objects(StockModel.self).filter("id == '\(fromIndexRow)'")
+        return results
     }
 }
