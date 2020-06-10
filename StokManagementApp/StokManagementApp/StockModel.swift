@@ -15,7 +15,7 @@ class StockModel: Object {
     @objc dynamic var comment: String?
     @objc dynamic var amountImage: Data?
     @objc dynamic var createDate = ""
-    @objc dynamic var deleteFlag = "0"
+    @objc dynamic var deleteFlag = false
      
     override static func primaryKey() -> String? {
         return "id"
@@ -55,7 +55,7 @@ class StockModel: Object {
     //削除フラグのないレコードの件数を取得
     func getRealmRecodeValue() -> Int {
         let realm = try! Realm()
-        let results = realm.objects(StockModel.self).filter("deleteFlag == '0'")
+        let results = realm.objects(StockModel.self).filter("deleteFlag == false")
         let intResults = results.count
         return intResults
     }
@@ -64,7 +64,7 @@ class StockModel: Object {
     func createCellData() -> [String] {
         let realm = try! Realm()
         var resultArray = [""]
-        let getDataQuery = realm.objects(StockModel.self).filter("deleteFlag == '0'")
+        let getDataQuery = realm.objects(StockModel.self).filter("deleteFlag == false")
         for data in getDataQuery {
             resultArray = ["数量：\(data.amount)登録日時：\(data.createDate)コメント：\(data.comment ?? "")"]
         }
