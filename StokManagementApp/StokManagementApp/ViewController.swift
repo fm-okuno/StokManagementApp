@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet private weak var amountLabel: UILabel!
     @IBOutlet private weak var commentTextField: UITextField!
     @IBOutlet private weak var tableView: UITableView!
-    
+
     //MARK: - Property クラスで使用する変数やインスタンス
     private var amount = 0
     private var amountArray: [String] = []
@@ -46,13 +46,7 @@ class ViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        //DB作成後、まずダミーオブジェクトを追加
-        let dummyStockModel = StockModel.create(asDummy: true)
-        try! realm.write {
-            realm.add(dummyStockModel)
-        }
-        
+                
         //1秒毎にshowNowTimeメソッドを実行する
         Timer.scheduledTimer(timeInterval: 1,
                              target: self,
@@ -87,6 +81,7 @@ class ViewController: UIViewController {
         sumAmount = 0
         
         tableView.reloadData()
+        
     }
         
     //追加ボタン
@@ -118,7 +113,7 @@ class ViewController: UIViewController {
 
         //DBにデータを追加
         stockModel.addStockData(amount: amount, comment: commentData, amountImage: nil, createDate: timeData)
-    
+        
         //追加ボタン押下で選択が全解除される為、一度sumAmountを初期化
         sumAmount = 0
         
@@ -149,7 +144,7 @@ class ViewController: UIViewController {
         
         //実際にAlertを表示する
         present(alert, animated: true, completion: nil)
-    }
+        }
     
     //MARK: - private method
     
@@ -194,7 +189,6 @@ private func judgeInputExistence(_ forString: String) -> String {
         return valueAssignedString
     }
 }
-
 //MARK: - extension
 //extensinを用いてセルの生成部分を分割
 extension ViewController : UITableViewDelegate {
@@ -215,7 +209,7 @@ extension ViewController : UITableViewDelegate {
             //sendTextに詳細ボタンが押された行に表示されているamountArrayの値を代入
             self.sendText = self.amountArray[indexPath.row]
             self.performSegue(withIdentifier: "toDetailViewController", sender: nil)
-            
+                        
             completionHandler(true)
         }
         
@@ -281,7 +275,10 @@ extension ViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         //配列の要素の数だけセルを生成
-        return amountArray.count
+//        return amountArray.count
+        
+        //DBの項目の数だけセルを生成
+        return self.stockModel.getRealmRecodeValue()
     }
     
     //セルのデータ
@@ -299,8 +296,12 @@ extension ViewController : UITableViewDataSource {
             cell.backgroundColor = .systemBlue
             
         }
+             
+        //現在は仮の値としてtestと表示
+        cell.textLabel?.text = "test"
+
+        //DBのデータを文にしてCellのTextLabelに表示
         
-        cell.textLabel?.text = amountArray[indexPath.row]
         //セルに行数のtagをつける
         cell.tag = indexPath.row
         return cell
