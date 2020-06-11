@@ -66,7 +66,7 @@ class StockModel: Object {
         var resultArray = [""]
         let getDataQuery = realm.objects(StockModel.self).filter("deleteFlag == false")
         for data in getDataQuery {
-            resultArray = ["数量：\(data.amount)登録日時：\(data.createDate)コメント：\(data.comment ?? "")"]
+            resultArray += ["数量：\(data.amount)登録日時：\(data.createDate)コメント：\(data.comment ?? "")"]
         }
         return resultArray
     }

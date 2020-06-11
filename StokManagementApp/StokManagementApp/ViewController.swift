@@ -297,10 +297,8 @@ extension ViewController : UITableViewDataSource {
             
         }
              
-        //現在は仮の値としてtestと表示
-        cell.textLabel?.text = "test"
-
         //DBのデータを文にしてCellのTextLabelに表示
+        cell.textLabel?.text = stockModel.createCellData()[indexPath.row + 1]
         
         //セルに行数のtagをつける
         cell.tag = indexPath.row
