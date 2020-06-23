@@ -139,7 +139,6 @@ class ViewController: UIViewController {
         //DBに追加したデータからセルに表示する内容を作成
         //countを-1しているのは、stocksが0から始まるのに対し、stocks.countが1から始まる為
         stockArray += createCellData(amount: stocks[stocks.count - 1].amount, comment: stocks[stocks.count - 1].comment, createDate: stocks[stocks.count - 1].createDate)
-        
         //テーブルを更新
         tableView.reloadData()
     }
@@ -219,6 +218,8 @@ private func createCellData(amount: Int, comment: String?, createDate: String) -
     return stockArray
 }
 
+
+
 //MARK: - extension
 //extensinを用いてセルの生成部分を分割
 extension ViewController : UITableViewDelegate {
@@ -243,13 +244,23 @@ extension ViewController : UITableViewDelegate {
             completionHandler(true)
         }
         
-        // 削除のアクションを設定する
+        //削除のアクションを設定する
         let deleteAction = UIContextualAction(style: .destructive, title:"削除") {
             (ctxAction, view, completionHandler) in
             
-            //削除ボタンが押された行のデータを配列から削除
-            self.amountArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            let stockID = self.stocks[indexPath.row].id
+            
+            //データの削除
+            let queryResults = self.realm.objects(StockModel.self).filter("id == \(stockID)").first
+            try! self.realm.write {
+                queryResults?.deleteFlag = true
+            }
+            
+            //データの更新
+            self.stocks = self.stockModel.getAll()
+            
+            //テーブルの更新
+            self.tableView.reloadData()
             
             completionHandler(true)
         }
@@ -275,7 +286,6 @@ extension ViewController : UITableViewDelegate {
         guard let thisCellTag = cell?.tag else {
             return
         }
-        sumAmount += inputAmountArray[thisCellTag]
     }
     
     //セル選択解除時の動作
@@ -325,12 +335,11 @@ extension ViewController : UITableViewDataSource {
         }
         
         //DBのデータを文にしてCellのTextLabelに表示
-//        cell.textLabel?.text = stocks[indexPath.row].cellData
         cell.textLabel?.text = stockArray[indexPath.row]
         
+        //セルに行数のtagをつける
         cell.tag = indexPath.row
         
-        //セルに行数のtagをつける
         return cell
     }
 }
