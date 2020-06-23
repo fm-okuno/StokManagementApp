@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     //MARK: - Property クラスで使用する変数やインスタンス
     private var amount = 0
     private var amountArray: [String] = []
+    private var stockArray: [String] = []
     //Timerをインスタンス化
     private let timer = Timer()
     //時刻のデータを入れる為のtimerData
@@ -40,6 +41,8 @@ class ViewController: UIViewController {
     
     private var tableCell = UITableViewCell()
     
+    private var stocks: [StockModel] = []
+        
     //MARK: - public method
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +57,18 @@ class ViewController: UIViewController {
                              userInfo: nil,
                              repeats: true
         )
+        //DBの全データをstocksに代入
+        stocks = stockModel.getAll()
+        
+        //アプリ起動時にDBから取得できた項目がある場合
+        if stocks.count != 0 {
+            for stocksArray in stocks {
+                //DBに登録された値からセルに表示する内容を作成
+                stockArray += createCellData(amount: stocksArray.amount, comment: stocksArray.comment ?? "", createDate: stocksArray.createDate)
+            }
+        }
+        
+        tableView.reloadData()
     }
     
     //segueで遷移時の処理
@@ -77,11 +92,11 @@ class ViewController: UIViewController {
         
         amountArray = []
         inputAmountArray = []
+        
         //在庫の合計値も初期化
         sumAmount = 0
         
         tableView.reloadData()
-        
     }
         
     //追加ボタン
@@ -107,7 +122,7 @@ class ViewController: UIViewController {
 
         //amountArrayにString形式で各データを保存
         amountArray += [("数量：\(judgeInputExistence(amountData))　時刻：\(timeData)　コメント：\(commentData)")]
-        
+                
         //カンマのついていない在庫数をinputAmountArrayに追加
         inputAmountArray.append(amount)
 
@@ -117,6 +132,13 @@ class ViewController: UIViewController {
         //追加ボタン押下で選択が全解除される為、一度sumAmountを初期化
         sumAmount = 0
         
+        //DBから取得したデータをリセットし、追加データを含めた全データを再取得
+        stocks = []
+        stocks = stockModel.getAll()
+        
+        //DBに追加したデータからセルに表示する内容を作成
+        //countを-1しているのは、stocksが0から始まるのに対し、stocks.countが1から始まる為
+        stockArray += createCellData(amount: stocks[stocks.count - 1].amount, comment: stocks[stocks.count - 1].comment, createDate: stocks[stocks.count - 1].createDate)
         //テーブルを更新
         tableView.reloadData()
     }
@@ -189,6 +211,15 @@ private func judgeInputExistence(_ forString: String) -> String {
         return valueAssignedString
     }
 }
+
+//セルに表示する内容を作成するcreateCellData
+private func createCellData(amount: Int, comment: String?, createDate: String) -> [String] {
+    let stockArray = ["数量:\(amount), コメント:\(comment ?? ""), 作成日時:\(createDate)"]
+    return stockArray
+}
+
+
+
 //MARK: - extension
 //extensinを用いてセルの生成部分を分割
 extension ViewController : UITableViewDelegate {
@@ -213,13 +244,23 @@ extension ViewController : UITableViewDelegate {
             completionHandler(true)
         }
         
-        // 削除のアクションを設定する
+        //削除のアクションを設定する
         let deleteAction = UIContextualAction(style: .destructive, title:"削除") {
             (ctxAction, view, completionHandler) in
             
-            //削除ボタンが押された行のデータを配列から削除
-            self.amountArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            let stockID = self.stocks[indexPath.row].id
+            
+            //データの削除
+            let queryResults = self.realm.objects(StockModel.self).filter("id == \(stockID)").first
+            try! self.realm.write {
+                queryResults?.deleteFlag = true
+            }
+            
+            //データの更新
+            self.stocks = self.stockModel.getAll()
+            
+            //テーブルの更新
+            self.tableView.reloadData()
             
             completionHandler(true)
         }
@@ -245,7 +286,6 @@ extension ViewController : UITableViewDelegate {
         guard let thisCellTag = cell?.tag else {
             return
         }
-        sumAmount += inputAmountArray[thisCellTag]
     }
     
     //セル選択解除時の動作
@@ -274,11 +314,8 @@ extension ViewController : UITableViewDataSource {
     //セルを生成
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        //配列の要素の数だけセルを生成
-//        return amountArray.count
-        
         //DBの項目の数だけセルを生成
-        return self.stockModel.getRealmRecodeValue()
+        return stocks.count
     }
     
     //セルのデータ
@@ -296,14 +333,13 @@ extension ViewController : UITableViewDataSource {
             cell.backgroundColor = .systemBlue
             
         }
-             
-        //現在は仮の値としてtestと表示
-        cell.textLabel?.text = "test"
-
+        
         //DBのデータを文にしてCellのTextLabelに表示
+        cell.textLabel?.text = stockArray[indexPath.row]
         
         //セルに行数のtagをつける
         cell.tag = indexPath.row
+        
         return cell
     }
 }

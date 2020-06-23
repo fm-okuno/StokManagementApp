@@ -52,29 +52,14 @@ class StockModel: Object {
         print(addStockData)
     }
     
-    //削除フラグのないレコードの件数を取得
-    func getRealmRecodeValue() -> Int {
+    //DBの全データを取得するgetAllメソッド
+    func getAll() -> [StockModel] {
         let realm = try! Realm()
-        let results = realm.objects(StockModel.self).filter("deleteFlag == false")
-        let intResults = results.count
-        return intResults
-    }
-    
-    //セルに表示する文字列を生成するcreateCellData
-    func createCellData() -> [String] {
-        let realm = try! Realm()
-        var resultArray = [""]
-        let getDataQuery = realm.objects(StockModel.self).filter("deleteFlag == false")
-        for data in getDataQuery {
-            resultArray = ["数量：\(data.amount)登録日時：\(data.createDate)コメント：\(data.comment ?? "")"]
+        let results = realm.objects(StockModel.self).filter("deleteFlag == false").sorted(byKeyPath: "id")
+        var stocks: [StockModel] = []
+        for stock in results {
+            stocks.append(stock)
         }
-        return resultArray
-    }
-    
-    //セルからデータを取り出す為のgetRealmRecodeData
-    func getRealmRecodeData(fromIndexRow: Int) -> Results<StockModel> {
-        let realm = try! Realm()
-        let results = realm.objects(StockModel.self).filter("id == '\(fromIndexRow)'")
-        return results
+        return stocks
     }
 }
