@@ -208,7 +208,7 @@
                     <navigationItem key="navigationItem" id="F4A-Gz-6me"/>
                     <connections>
                         <outlet property="imageView" destination="rsW-ia-6ft" id="oS0-fV-69x"/>
-                        <outlet property="uiNavigationItem" destination="brN-2R-Dxj" id="Wuz-2w-ZGN"/>
+                        <outlet property="uiNavigationItem" destination="brN-2R-Dxj" id="bGO-N5-v8P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPr-cx-7Q8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

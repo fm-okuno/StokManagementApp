@@ -19,10 +19,8 @@ class DetailViewController : UIViewController {
     //MARK: - instance
     //titleTextに受け取ったamountArrayのテキストを表示
     var titleText: String?
-    //PrimaryKeyを受け取る
-    var stockId: String?
-    //写真を保存しておく為のuserDefaults
-    let userDefaults = UserDefaults.standard
+    //ViewControllerからIDを受け取る
+    var stockId: Int?
     let stockModel = StockModel()
     let realm = try! Realm()
 
@@ -31,14 +29,36 @@ class DetailViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //argStringに値が入っていない場合には、後続処理を継続しない
+        //titleTextに値が入っていない場合には、後続処理を継続しない
         guard let thisTitleText = titleText else {
             uiNavigationItem.title = "値がない"
             return
         }
-        
+
         //titleにtextの内容を代入して表示
         uiNavigationItem.title = thisTitleText
+                
+        //stockIdが空の場合には後続処理を継続しない
+        guard let thisStockId = stockId else {
+            print("IDを取得できていません。(\(stockId))")
+            return
+        }
+    
+        print("受け取ったIDは\(thisStockId)だよ")
+
+        //正常にデータを取得できていない場合には後続処理を継続しない
+        let results = realm.objects(StockModel.self).filter("id == \(thisStockId)").first
+        guard let savedImage = results?.amountImage else {
+            return
+        }
+        
+        //取得した画像データをUIImage型に変換できない場合には後続処理を継続しない
+        guard let thisUiImageData = UIImage(data: savedImage) else {
+            return
+        }
+        
+        imageView.image = thisUiImageData
+                
     }
     
     //MARK: - private method
@@ -47,13 +67,30 @@ class DetailViewController : UIViewController {
     
     //写真を保存する為のactionSaveImageButton
     @IBAction private func actionSaveImageButton(_ sender: Any) {
-        //現在表示中の画像データを取得
-        //imageView.imageが空の場合には後続処理を継続しない
-        guard let thisImage = imageView.image else {
+        
+        //stockIdが空の場合には後続処理を継続しない
+        guard let thisStockId = stockId else {
+            print("IDを取得できていません")
             return
         }
         
-        let imageData = thisImage.pngData()
+        //現在表示中の画像データを取得
+        //imageView.imageが空の場合には後続処理を継続しない
+        guard let showImage = imageView.image else {
+            print("写真を正常に取得できていません")
+            return
+        }
+        
+        //画像をData型に変換できない場合には後続処理を継続しない
+        guard let thisPngImageData = showImage.pngData() else {
+            return
+        }
+        
+
+        let results = realm.objects(StockModel.self).filter("id == \(thisStockId)").first
+        try! realm.write {
+            results?.amountImage = thisPngImageData
+        }
     }
     
     //+ボタンを押下でカメラロールを開き、写真を選択
@@ -74,12 +111,12 @@ class DetailViewController : UIViewController {
 extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //選択された写真をUIImageViewに表示
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
+            
         //選択された写真を取得
-        let image = info[.originalImage] as! UIImage
-
+        let selectedImage = info[.originalImage] as! UIImage
+                
         //選択された写真を表示
-        imageView.image = image
+        imageView.image = selectedImage
         
         //写真を選ぶビューを閉じる
         self.dismiss(animated: true )
