@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     //セグエで受け渡す変数
     private var sendText: String?
     //セグエで受け渡すid
-    private var sendStockId: Int = 0
+    private var sendStockId = 0
     //Realm
     private let realm = try! Realm()
     //StockModelのインスタンス化
