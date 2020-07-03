@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     //セグエで受け渡す変数
     private var sendText: String?
     //セグエで受け渡すid
-    private var sendStockId: String?
+    private var sendStockId = 0
     //Realm
     private let realm = try! Realm()
     //StockModelのインスタンス化
@@ -82,8 +82,10 @@ class ViewController: UIViewController {
             return
         }
         
-        //detailVCのtitleTextにamountArrayを入れた変数を指定
+        //detailVCに選択されたセルに表示されている内容と、そのセルのIDを送信
         detailVC.titleText = sendText
+        detailVC.stockId = sendStockId
+        print("detailVCに渡す値は「\(sendText ?? "なし")」と「\(sendStockId)」です")
     }
     
     //MARK: - IBAction
@@ -136,9 +138,10 @@ class ViewController: UIViewController {
         stocks = []
         stocks = stockModel.getAll()
         
-        //DBに追加したデータからセルに表示する内容を作成
+        //セルに表示するデータを作成し、stockArrayに追加
         //countを-1しているのは、stocksが0から始まるのに対し、stocks.countが1から始まる為
         stockArray += createCellData(amount: stocks[stocks.count - 1].amount, comment: stocks[stocks.count - 1].comment, createDate: stocks[stocks.count - 1].createDate)
+        
         //テーブルを更新
         tableView.reloadData()
     }
@@ -238,9 +241,13 @@ extension ViewController : UITableViewDelegate {
             (ctxAction, view, completionHandler) in
             
             //sendTextに詳細ボタンが押された行に表示されているamountArrayの値を代入
-            self.sendText = self.amountArray[indexPath.row]
+            self.sendText = self.stockArray[indexPath.row]
+
+            //sendStockIdに詳細ボタンが押された行のIDの値を代入
+            self.sendStockId = self.stocks[indexPath.row].id
+
             self.performSegue(withIdentifier: "toDetailViewController", sender: nil)
-                        
+
             completionHandler(true)
         }
         
@@ -338,7 +345,7 @@ extension ViewController : UITableViewDataSource {
         cell.textLabel?.text = stockArray[indexPath.row]
         
         //セルに行数のtagをつける
-        cell.tag = indexPath.row
+        cell.tag = self.stocks[indexPath.row].id
         
         return cell
     }
