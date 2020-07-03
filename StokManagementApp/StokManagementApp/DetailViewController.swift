@@ -46,8 +46,6 @@ class DetailViewController : UIViewController {
             return
         }
     
-        print("受け取ったIDは\(thisStockId)だよ")
-
         //正常にデータを取得できていない場合には後続処理を継続しない
         let results = realm.objects(StockModel.self).filter("id == \(thisStockId)").first
         guard let savedImage = results?.amountImage else {
@@ -63,8 +61,6 @@ class DetailViewController : UIViewController {
                 
     }
     
-    //MARK: - private method
-    
     //MARK: - IBAction
     
     //写真を保存する為のactionSaveImageButton
@@ -79,7 +75,7 @@ class DetailViewController : UIViewController {
         //現在表示中の画像データを取得
         //imageView.imageが空の場合には後続処理を継続しない
         guard let selectedImage = imageView.image else {
-            print("写真を正常に取得できていません")
+            print("画像を正常に取得できていません")
             return
         }
         
@@ -93,6 +89,26 @@ class DetailViewController : UIViewController {
         try! realm.write {
             results?.amountImage = imageData
         }
+    }
+    
+    //ゴミ箱ボタンを押下でセルに保存された写真を削除する
+    @IBAction private func actionDeleteImageButton(_ sender: Any) {
+        
+        //IDを正常に取得できていない場合には後続処理を継続しない
+        guard let thisStockId = stockId else {
+            print("IDを正常に取得できていません")
+            return
+        }
+        
+        //取得したIDに一致する画像を検索し、削除する
+        let results = realm.objects(StockModel.self).filter("id == \(thisStockId)").first
+        try! realm.write {
+            results?.amountImage = nil
+        }
+        
+        //現在表示中の画像を削除する
+        imageView.image = nil
+        
     }
     
     //+ボタンを押下でカメラロールを開き、写真を選択
