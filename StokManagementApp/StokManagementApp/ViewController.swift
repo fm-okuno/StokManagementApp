@@ -19,28 +19,27 @@ class ViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
 
     //MARK: - Property クラスで使用する変数やインスタンス
+    //入力された在庫数を保存するamount
     private var amount = 0
-    private var amountArray: [String] = []
+    //セルに表示する内容を保存しておくstockArray配列
     private var stockArray: [String] = []
     //Timerをインスタンス化
     private let timer = Timer()
     //時刻のデータを入れる為のtimerData
     private var timerData = ""
-    //入力された在庫数を入れる為のinputAmountArray
-    private var inputAmountArray: [Int] = []
-    //選択されたセルの合計値を保存する為のadditionAmountValue
+    //選択されたセルの合計値を保存する為のsumAmount
     private var sumAmount = 0
     //セグエで受け渡す変数
     private var sendText: String?
     //セグエで受け渡すid
     private var sendStockId = 0
-    //Realm
+    //Realmをインスタンス化
     private let realm = try! Realm()
     //StockModelのインスタンス化
     private let stockModel = StockModel()
-    
+    //UITableViewCellをインスタンス化
     private var tableCell = UITableViewCell()
-    
+    //DBの全情報を保存する為のstocks
     private var stocks: [StockModel] = []
         
     //MARK: - public method
@@ -91,10 +90,6 @@ class ViewController: UIViewController {
     //MARK: - IBAction
     //クリアボタン押下で配列を空にして画面を更新する事でリストを全件削除
     @IBAction private func actionAmountClearButton(_ sender: UIButton) {
-        
-        amountArray = []
-        inputAmountArray = []
-        
         //在庫の合計値も初期化
         sumAmount = 0
         
@@ -103,12 +98,6 @@ class ViewController: UIViewController {
         
     //追加ボタン
     @IBAction private func actionAddStockButton(_ sender: UIButton) {
-        
-        //String型のamountDataにamountLabelの値を代入
-        //amountDataがnilの場合には後続処理を継続しない
-        guard let amountData = amountLabel.text else {
-            return
-        }
                 
         //timeDataにHH:mm:ssに整形済みの現在時刻を代入
         //timeDataがnilの場合には後続処理を継続しない
@@ -121,12 +110,6 @@ class ViewController: UIViewController {
         guard let commentData = commentTextField.text else {
             return
         }
-
-        //amountArrayにString形式で各データを保存
-        amountArray += [("数量：\(judgeInputExistence(amountData))　時刻：\(timeData)　コメント：\(commentData)")]
-                
-        //カンマのついていない在庫数をinputAmountArrayに追加
-        inputAmountArray.append(amount)
 
         //DBにデータを追加
         stockModel.addStockData(amount: amount, comment: commentData, amountImage: nil, createDate: timeData)
@@ -288,11 +271,6 @@ extension ViewController : UITableViewDelegate {
         cell?.selectionStyle = .none
         cell?.backgroundColor = .yellow
         tableView.allowsMultipleSelection = true
-        
-        //押下されたセルのtagをindexに指定し、additionAmountValueに在庫をプラス
-        guard let thisCellTag = cell?.tag else {
-            return
-        }
     }
     
     //セル選択解除時の動作
@@ -302,10 +280,7 @@ extension ViewController : UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) else {
             return
         }
-        
-        //選択解除されたセルの在庫分をマイナス
-        sumAmount -= inputAmountArray[cell.tag]
-        
+                
         cell.accessoryType = .none
         
         //セル生成時と同じ条件で再度色を設定（元の色に戻す）
@@ -343,9 +318,6 @@ extension ViewController : UITableViewDataSource {
         
         //DBのデータを文にしてCellのTextLabelに表示
         cell.textLabel?.text = stockArray[indexPath.row]
-        
-        //セルに行数のtagをつける
-        cell.tag = self.stocks[indexPath.row].id
         
         return cell
     }

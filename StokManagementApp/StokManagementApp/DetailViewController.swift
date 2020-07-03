@@ -21,7 +21,9 @@ class DetailViewController : UIViewController {
     var titleText: String?
     //ViewControllerからIDを受け取る
     var stockId: Int?
+    //StockModelをいインスタンス化
     let stockModel = StockModel()
+    //realmをインスタンス化
     let realm = try! Realm()
 
 
@@ -40,7 +42,7 @@ class DetailViewController : UIViewController {
                 
         //stockIdが空の場合には後続処理を継続しない
         guard let thisStockId = stockId else {
-            print("IDを取得できていません。(\(stockId))")
+            print("IDを取得できていません")
             return
         }
     
