@@ -76,20 +76,20 @@ class DetailViewController : UIViewController {
         
         //現在表示中の画像データを取得
         //imageView.imageが空の場合には後続処理を継続しない
-        guard let showImage = imageView.image else {
+        guard let selectedImage = imageView.image else {
             print("写真を正常に取得できていません")
             return
         }
         
         //画像をData型に変換できない場合には後続処理を継続しない
-        guard let thisPngImageData = showImage.pngData() else {
+        guard let imageData = selectedImage.pngData() else {
             return
         }
         
 
         let results = realm.objects(StockModel.self).filter("id == \(thisStockId)").first
         try! realm.write {
-            results?.amountImage = thisPngImageData
+            results?.amountImage = imageData
         }
     }
     
