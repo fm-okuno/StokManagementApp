@@ -182,7 +182,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="4tP-Cu-atZ"/>
-                                    <barButtonItem systemItem="trash" id="fbp-kV-prA"/>
+                                    <barButtonItem systemItem="trash" id="fbp-kV-prA">
+                                        <connections>
+                                            <action selector="actionDeleteImageButton:" destination="GOo-1x-gQM" id="jW6-ua-xHc"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
