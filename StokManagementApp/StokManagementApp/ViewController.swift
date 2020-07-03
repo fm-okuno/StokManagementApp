@@ -271,6 +271,9 @@ extension ViewController : UITableViewDelegate {
         cell?.selectionStyle = .none
         cell?.backgroundColor = .yellow
         tableView.allowsMultipleSelection = true
+        
+        sumAmount += stocks[indexPath.row].amount
+        
     }
     
     //セル選択解除時の動作
@@ -282,6 +285,8 @@ extension ViewController : UITableViewDelegate {
         }
                 
         cell.accessoryType = .none
+        
+        sumAmount -= stocks[indexPath.row].amount
         
         //セル生成時と同じ条件で再度色を設定（元の色に戻す）
         if indexPath.row % 2 == 0 {
