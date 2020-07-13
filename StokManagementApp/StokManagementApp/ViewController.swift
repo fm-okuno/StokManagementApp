@@ -239,12 +239,18 @@ extension ViewController : UITableViewDelegate {
             (ctxAction, view, completionHandler) in
             
             let stockID = self.stocks[indexPath.row].id
-            
+                        
             //データの削除
             let queryResults = self.realm.objects(StockModel.self).filter("id == \(stockID)").first
             try! self.realm.write {
                 queryResults?.deleteFlag = true
             }
+            
+            //情報の再取得を実施するので合計値を初期化
+            self.sumAmount = 0
+            
+            //削除された行のデータをデータ表示用配列から削除
+            self.stockArray.remove(at: indexPath.row)
             
             //データの更新
             self.stocks = self.stockModel.getAll()
@@ -272,8 +278,18 @@ extension ViewController : UITableViewDelegate {
         cell?.backgroundColor = .yellow
         tableView.allowsMultipleSelection = true
         
-        sumAmount += stocks[indexPath.row].amount
+        guard let selectedIndexPath = tableView.indexPathsForSelectedRows else {
+            return
+        }
+
+        //セルが選択されたら一度合計値を初期化
+        sumAmount = 0
         
+        //選択されたセルのamountをsumAmountに加算
+        for result in selectedIndexPath {
+            sumAmount += stocks[result.row].amount
+        }
+                
     }
     
     //セル選択解除時の動作
@@ -283,11 +299,11 @@ extension ViewController : UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) else {
             return
         }
+        
+        self.sumAmount -= stocks[indexPath.row].amount
                 
         cell.accessoryType = .none
-        
-        sumAmount -= stocks[indexPath.row].amount
-        
+                
         //セル生成時と同じ条件で再度色を設定（元の色に戻す）
         if indexPath.row % 2 == 0 {
             cell.backgroundColor = .systemRed
