@@ -90,6 +90,16 @@ class ViewController: UIViewController {
     //MARK: - IBAction
     //クリアボタン押下で配列を空にして画面を更新する事でリストを全件削除
     @IBAction private func actionAmountClearButton(_ sender: UIButton) {
+        
+        let results = realm.objects(StockModel.self).filter("deleteFlag == false")
+        
+        try! realm.write {
+            results.setValue("true", forKey: "deleteFlag")
+        }
+        
+        //データ表示用の配列を初期化
+        stockArray = []
+                        
         //在庫の合計値も初期化
         sumAmount = 0
         
@@ -204,8 +214,6 @@ private func createCellData(amount: Int, comment: String?, createDate: String) -
     return stockArray
 }
 
-
-
 //MARK: - extension
 //extensinを用いてセルの生成部分を分割
 extension ViewController : UITableViewDelegate {
@@ -318,7 +326,7 @@ extension ViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         //DBの項目の数だけセルを生成
-        return stocks.count
+        return stockArray.count
     }
     
     //セルのデータ
@@ -336,10 +344,10 @@ extension ViewController : UITableViewDataSource {
             cell.backgroundColor = .systemBlue
             
         }
-        
-        //DBのデータを文にしてCellのTextLabelに表示
-        cell.textLabel?.text = stockArray[indexPath.row]
+                
+            cell.textLabel?.text = stockArray[indexPath.row]
         
         return cell
+    
     }
 }
